@@ -127,7 +127,7 @@ def parseOptions(question):
 
 def fetch_previous_prompts():
     prompts = cache.execute(
-        "SELECT messages FROM conversations ORDER BY timestamp DESC LIMIT 10"
+        "SELECT messages FROM conversations ORDER BY timestamp DESC LIMIT 3"
     ).fetchall()
     previous_prompts = []
 
