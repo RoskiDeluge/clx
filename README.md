@@ -78,6 +78,6 @@ Cbot saves every command in a SQLite3 database located in the home directory .cb
 
 #### Credits
 ----
-Current version by Roberto Delgado
-Initial version by Gregory Raiz
+Current version by Roberto Delgado. 
+Initial version by Gregory Raiz. 
 This code is free to use under the MIT liscense.
