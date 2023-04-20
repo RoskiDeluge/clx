@@ -1,0 +1,2 @@
+[console_scripts]
+cbot = cbot.__main__:main

@@ -1,0 +1,9 @@
+LICENSE
+README.md
+setup.py
+cbot.egg-info/PKG-INFO
+cbot.egg-info/SOURCES.txt
+cbot.egg-info/dependency_links.txt
+cbot.egg-info/entry_points.txt
+cbot.egg-info/requires.txt
+cbot.egg-info/top_level.txt
