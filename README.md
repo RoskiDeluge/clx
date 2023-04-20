@@ -33,7 +33,7 @@ $> cbot -x How do I create a file test.txt
 ```
 
 ## Cbot Basics
-The application is a simple Python script that prompts GPT3.5 with a system message and the OS of the current system. This helps ensure that Linux, Mac, and Windows specific commands tend to be more accurate.  Cbot is based entirely on GPT3.5 and it's not perfect. Currently cbot does not have a context for it's responses, so each response cannot reference previous responses. 
+The application is a simple Python script that prompts the gpt-3.5-turbo endpoint with a system message and the OS of the current system. This helps ensure that Linux, Mac, and Windows specific commands tend to be more accurate.  
 
 ## Installation
 
@@ -41,16 +41,8 @@ The application is a simple Python script that prompts GPT3.5 with a system mess
 This is most commonly a file called .zshrc or .bashrc in your home directory.  The API key is something that you can get from: https://beta.openai.com/account/api-keyse
 
 - Clone this repo to your computer using the command line.
-- Allow the file to be executed and then copy the cbot.python file into a directory that is accessible within your path. It is recommended that you name it "cbot" without the python extension for simplicity. 
-- You will also need to make sure that python has the OpenAI mobule.  
-```
-$> git clone git@github.com:graiz/cbot.git
-$> cd cbot
-$> chmod +x cbot.py
-$> mv cbot.py ~/bin/cbot      (you can use a different location in your $PATH)
-$> pip3 install openai
-$> pip3 install pyperclip    
-```
+- Run `pip install -e .` inside your cloned cbot/ directory
+
 ## Testing
 
 If everything is working you should be able to run "cbot" from the command line with a question and it'll return an answer.
