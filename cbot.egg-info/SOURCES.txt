@@ -1,6 +1,9 @@
 LICENSE
 README.md
 setup.py
+cbot/__init__.py
+cbot/__main__.py
+cbot/cbot.py
 cbot.egg-info/PKG-INFO
 cbot.egg-info/SOURCES.txt
 cbot.egg-info/dependency_links.txt
