@@ -188,7 +188,7 @@ def run_cbot(argv):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=prompt,
-            temperature=0,
+            temperature=0.5,
             max_tokens=1000,
             top_p=1,
             frequency_penalty=0,
