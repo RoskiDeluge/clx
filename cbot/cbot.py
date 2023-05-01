@@ -173,9 +173,9 @@ def run_cbot(argv):
             # using a temp variable so the ? doesn't get cached
 
         if (question_mode == "general"):
-            system_message = "You are a helpful assistant. Answer the user's question in the best way possible."
+            system_message = "You are a helpful assistant. Answer the user's question in the best and most concise way possible."
         else:  # question_mode is "normal"
-            system_message = f"You are a command line translation tool for {platform}. You will answer the user's question with the correct unix command."
+            system_message = f"You are a command line translation tool for {platform}. You will provide a concise answer to the user's question with the correct command."
 
         # Fetch previous prompts from the cache
         previous_prompts = fetch_previous_prompts()
@@ -186,10 +186,10 @@ def run_cbot(argv):
         prompt += [{"role": "user", "content": temp_question}]
 
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=prompt,
-            temperature=0.5,
-            max_tokens=1000,
+            temperature=0,
+            max_tokens=200,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0
