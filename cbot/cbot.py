@@ -175,7 +175,7 @@ def run_cbot(argv):
         if (question_mode == "general"):
             system_message = "You are a helpful assistant. Answer the user's question in the best and most concise way possible."
         else:  # question_mode is "normal"
-            system_message = f"You are a command line translation tool for {platform}. You will provide a concise answer to the user's question with the correct command."
+            system_message = f"You are a command line translation tool for {platform}. You will provide a concise answer to the user's question with the correct command. Do not provide examples."
 
         # Fetch previous prompts from the cache
         previous_prompts = fetch_previous_prompts()
