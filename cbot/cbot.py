@@ -186,7 +186,7 @@ def run_cbot(argv):
         prompt += [{"role": "user", "content": temp_question}]
 
         response = openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=prompt,
             temperature=0,
             max_tokens=200,
