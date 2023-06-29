@@ -41,7 +41,7 @@ The application is a Python script that prompts the gpt-3.5-turbo chat completio
 ## Installation
 
 - Add your OpenAI API key into an environmental variable. The easiest way to do this is to add to to your command line shell by adding the line:  export OPENAI_API_KEY="then_enter_your_key"
-This is most commonly a file called .zshrc or .bashrc in your home directory.  The API key is something that you can get from: https://beta.openai.com/account/api-keyse
+This is most commonly a file called .zshrc or .bashrc in your home directory.  The API key is something that you can get from: https://platform.openai.com/account/api-keys
 
 - Clone this repo to your computer using your terminal.
 - Run `pip install -e .` inside your cloned cbot/ directory
