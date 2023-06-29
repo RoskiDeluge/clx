@@ -125,7 +125,7 @@ def run_cbot(argv):
 
     def fetch_previous_prompts():
         prompts = cache.execute(
-            "SELECT messages FROM conversations ORDER BY timestamp DESC LIMIT 3"
+            "SELECT messages FROM conversations ORDER BY timestamp DESC LIMIT 6"
         ).fetchall()
         previous_prompts = []
 
@@ -189,7 +189,7 @@ def run_cbot(argv):
             model="gpt-3.5-turbo",
             messages=prompt,
             temperature=0,
-            max_tokens=200,
+            max_tokens=500,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0
