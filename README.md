@@ -19,9 +19,9 @@ $> cbot -g "could you summarize plato's dialog by the same name?"
 $> cbot -g "In google sheets, how should I change this formula '=sum($B30:$B32)' so I can keep an absolute reference to the sheet it's in 'RD 2023'?" 
    To keep an absolute reference to the sheet named 'RD 2023' in Google Sheets, you can modify the formula by using the `!` operator to specify the sheet name:
 
-   ```
+   '''
    =sum('RD 2023'!A1:A10)
-   ```
+   '''
 
    Replace `A1:A10` with the range of cells you want to sum in the 'RD 2023' sheet. This formula will calculate the sum of the values in the specified range on the 'RD       2023' sheet, regardless of which sheet the formula is entered on.
 
