@@ -11,10 +11,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-# The recommended approach is to set the API_Key in an environmental
-# variable. If you don't want to set that up, you can uncomment this
-# line and add your key directly.
-# openai.api_key = "st-key-goes-here"
 
 global question
 question = ""
@@ -125,7 +121,7 @@ def run_cbot(argv):
 
     def fetch_previous_prompts():
         prompts = cache.execute(
-            "SELECT messages FROM conversations ORDER BY timestamp DESC LIMIT 3"
+            "SELECT messages FROM conversations ORDER BY timestamp DESC LIMIT 6"
         ).fetchall()
         previous_prompts = []
 
@@ -186,10 +182,10 @@ def run_cbot(argv):
         prompt += [{"role": "user", "content": temp_question}]
 
         response = openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-3.5-turbo",
             messages=prompt,
             temperature=0,
-            max_tokens=200,
+            max_tokens=500,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0
