@@ -50,7 +50,7 @@ This is most commonly a file called .zshrc or .bashrc in your home directory.  T
 
 ## Context (Memory)
 
-This version of cbot is using OpenAI's chat completion endpoint which allows cbot to reference it's chat history. If you ask it a question and mention a topic you have previously asked about, it should remember its previous responses and answer accordingly. 
+This version of cbot is using OpenAI's chat completion endpoint which allows cbot to reference its chat history. If you ask it a question and mention a topic you have previously asked about, it should remember its previous responses and answer accordingly. 
 
 
 # Advanced tricks...
