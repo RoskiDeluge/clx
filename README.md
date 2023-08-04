@@ -36,7 +36,7 @@ $> cbot -g "In google sheets, how should I change this formula '=sum($B30:$B32)'
 ```
 
 ## Cbot Basics
-The application is a Python script that prompts the gpt-3.5-turbo chat completions endpoint with a system message and the OS of the current system. This helps ensure that Linux, Mac, and Windows specific commands tend to be more accurate.  
+The application is a Python script that prompts the gpt-3.5-turbo chat completions endpoint with a system message and can identify the OS of the current system. This helps ensure that Linux, Mac, and Windows specific commands tend to be more accurate.  
 
 ## Installation
 
