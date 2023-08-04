@@ -46,7 +46,7 @@ This is most commonly a file called .zshrc or .bashrc in your home directory.  T
 - Clone this repo to your computer using your terminal.
 - `cd ~/<your-directory>/cbot/`
 - Run `pip install -e .` inside your cbot directory
-- Add a `.env` file in your root directory and enter your OpenAI key `OPENAI_API_KEY=<YOUR-KEY-HERE>`
+- Add a `.env` file with your your OpenAI key (`OPENAI_API_KEY=<YOUR-KEY-HERE>`) in your cbot root directory
 - A "cbot" command should be available to use cbot from your CLI, e.g. `cbot -g "Who was the 45th president of the United States?`
 
 ## Context (Memory)
