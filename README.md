@@ -1,5 +1,5 @@
 # cbot
-Cbot is a command line bot that uses the gpt-3.5-turbo endpoint from OpenAI. Like the ChatGPT web app, cbot will answer both general questions and specific questions about anything computer related. An OpenAI API key is required for this to work. 
+Cbot is a command line chat bot that uses the gpt-3.5-turbo model from OpenAI. Like the ChatGPT web app, cbot will answer both general questions and specific questions about anything computer related. An OpenAI API key is required for this to work. 
 
 ## Example usage:
 ```
