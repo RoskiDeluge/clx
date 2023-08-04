@@ -44,7 +44,8 @@ The application is a Python script that prompts the gpt-3.5-turbo chat completio
 This is most commonly a file called .zshrc or .bashrc in your home directory.  The API key is something that you can get from: https://platform.openai.com/account/api-keys
 
 - Clone this repo to your computer using your terminal.
-- Run `pip install -e .` inside your cloned cbot/ directory
+- `cd ~/<your-directory>/cbot/`
+- Run `pip install -e .` inside your cbot directory
 - Add a `.env` file in your root directory and enter your OpenAI key `OPENAI_API_KEY=<YOUR-KEY-HERE>`
 - A "cbot" command should be available to use cbot from your CLI, e.g. `cbot -g "Who was the 45th president of the United States?`
 
