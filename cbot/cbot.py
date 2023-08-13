@@ -18,7 +18,6 @@ from langchain.agents import initialize_agent
 load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-# serpapi_api_key = os.getenv("SERPAPI_API_KEY")
 google_api_key = os.getenv("GOOGLE_API_KEY")
 google_cse_id = os.getenv("GOOGLE_CSE_ID")
 
@@ -37,7 +36,7 @@ tools = [
 
 memory = ConversationBufferMemory(memory_key="chat_history")
 agent_chain = initialize_agent(
-    tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=True, memory=memory)
+    tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=False, memory=memory)
 
 global question
 question = ""
@@ -47,6 +46,16 @@ def run_cbot(argv):
 
     global sys
     sys.argv = argv
+
+    if "-a" in argv:
+        print("Entering agent mode. Type 'exit' to end the agent chat.")
+        while True:
+            user_input = input("You: ")
+            if user_input.lower() == 'exit':
+                print("Exiting chat mode.")
+                sys.exit()  # Terminate the program immediately
+            response = agent_chain.run(input=user_input)
+            print("agent:", response)
 
     def initDB():
         global cache
@@ -162,16 +171,6 @@ def run_cbot(argv):
             previous_prompts.extend(messages)
 
         return previous_prompts
-
-    if "-a" in argv:
-        print("Entering chat mode. Type 'exit' to end the chat.")
-        while True:
-            user_input = input("You: ")
-            if user_input.lower() == 'exit':
-                print("Exiting chat mode.")
-                break
-            response = agent_chain.run(input=user_input)
-            print("AI:", response)
 
     # Detect the platform. This helps with platform specific paths
     # and system specific options for certain commands
