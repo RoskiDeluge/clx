@@ -12,21 +12,18 @@ from langchain import OpenAI
 
 from langchain.agents import Tool, AgentType
 from langchain.memory import ConversationBufferMemory
-from langchain.utilities import GoogleSearchAPIWrapper
+from langchain.utilities import SerpAPIWrapper
 from langchain.agents import initialize_agent
 
 load_dotenv()
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-# serpapi_api_key = os.getenv("SERPAPI_API_KEY")
-google_api_key = os.getenv("GOOGLE_API_KEY")
-google_cse_id = os.getenv("GOOGLE_CSE_ID")
 
 # LangChain Initialization
 llm = OpenAI(temperature=0)
 
 # Initialize the Conversational Agent with Search tool
-search = GoogleSearchAPIWrapper()
+search = SerpAPIWrapper()
 tools = [
     Tool(
         name="Current Search",
@@ -44,6 +41,18 @@ question = ""
 
 
 def run_cbot(argv):
+    if "-a" in argv:
+        print("Entering chat mode. Type 'exit' to end the chat.")
+        while True:
+            user_input = input("You: ")
+            if user_input.lower() == 'exit':
+                print("Exiting chat mode.")
+                break
+            response = agent_chain.run(input=user_input)
+            print("AI:", response)
+            # Save the AI's response to the SQLite database
+            # We'll use the insertQ function for this, assuming it accepts the question and answer as parameters
+            insertQ(user_input, response)
 
     global sys
     sys.argv = argv
@@ -52,7 +61,7 @@ def run_cbot(argv):
         global cache
         cache = sqlite3.connect(home + "/.cbot_cache")
         cache.execute("""
-                    CREATE TABLE IF NOT EXISTS questions
+                    CREATE TABLE IF NOT EXISTS questions 
                     (id INTEGER PRIMARY KEY,
                     question TEXT,
                     answer TEXT,
@@ -61,18 +70,16 @@ def run_cbot(argv):
 
         # Create conversations table
         cache.execute("""
-                    CREATE TABLE IF NOT EXISTS conversations
+                    CREATE TABLE IF NOT EXISTS conversations 
                     (id INTEGER PRIMARY KEY,
                     messages TEXT,
                     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)""")
 
     def closeDB():
-        global cache
         cache.commit()
         cache.close()
 
     def checkQ(question_text):
-        global cache
         sql = "SELECT id,answer,count FROM questions WHERE question =" + question_text
         answer = cache.execute(
             "SELECT id,answer,count FROM questions WHERE question = ?", (question_text,))
@@ -87,7 +94,6 @@ def run_cbot(argv):
             return(False)
 
     def insertQ(question_text, answer_text):
-        global cache
         answer = cache.execute(
             "DELETE FROM questions WHERE question = ?", (question_text,))
         answer = cache.execute(
@@ -151,7 +157,6 @@ def run_cbot(argv):
         return(question)
 
     def fetch_previous_prompts():
-        global cache
         prompts = cache.execute(
             "SELECT messages FROM conversations ORDER BY timestamp DESC LIMIT 6"
         ).fetchall()
@@ -162,16 +167,6 @@ def run_cbot(argv):
             previous_prompts.extend(messages)
 
         return previous_prompts
-
-    if "-a" in argv:
-        print("Entering chat mode. Type 'exit' to end the chat.")
-        while True:
-            user_input = input("You: ")
-            if user_input.lower() == 'exit':
-                print("Exiting chat mode.")
-                break
-            response = agent_chain.run(input=user_input)
-            print("AI:", response)
 
     # Detect the platform. This helps with platform specific paths
     # and system specific options for certain commands

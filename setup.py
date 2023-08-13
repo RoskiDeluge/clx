@@ -8,6 +8,7 @@ setup(
         "openai",
         "python-dotenv",
         "pyperclip",
+        "langchain",
     ],
     entry_points={
         "console_scripts": [
