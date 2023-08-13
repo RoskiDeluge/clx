@@ -53,6 +53,25 @@ This is most commonly a file called .zshrc or .bashrc in your home directory.  T
 
 This version of cbot is using OpenAI's chat completion endpoint which allows cbot to reference its chat history. If you ask it a question and mention a topic you have previously asked about, it should remember its previous responses and answer accordingly. 
 
+## (NEW) Conversational Agent with Tools (Google Search)
+
+The conversational agent mode allows cbot to look up information on the internet by using its Google Search tool.
+
+NOTE: To the conversational agent Google search feature you will need to add two additional keys to your .env file `GOOGLE_API_KEY` and `GOOGLE_CSE_ID` for instructions on how to get these keys follow these instructions: https://python.langchain.com/docs/modules/agents/tools/integrations/google_search
+
+To enter chat mode with cbot's conversation agent use the `-a` flag in your command: 
+
+`cbot -a`
+
+The cli is now in conversation mode: 
+
+```
+$> cbot -a
+Entering agent mode. Type 'exit' to end the agent chat.
+You:
+```
+
+
 
 # Advanced tricks...
 
