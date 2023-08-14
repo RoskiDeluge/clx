@@ -1,5 +1,5 @@
 # cbot
-Cbot is a simple python command line bot that uses the gpt-3.5-turbo endpoint from OpenAI. Like the ChatGPT web app, cbot will answer both general questions and specific questions about anything computer related. An OpenAI API key is required for this to work. 
+Cbot is a command line chat bot that uses the gpt-3.5-turbo model from OpenAI. Like the ChatGPT web app, cbot will answer both general questions and specific questions about anything computer related. An OpenAI API key is required it to work. 
 
 ## Example usage:
 ```
@@ -36,7 +36,7 @@ $> cbot -g "In google sheets, how should I change this formula '=sum($B30:$B32)'
 ```
 
 ## Cbot Basics
-The application is a Python script that prompts the gpt-3.5-turbo chat completions endpoint with a system message and the OS of the current system. This helps ensure that Linux, Mac, and Windows specific commands tend to be more accurate.  
+The application is a Python script that prompts the gpt-3.5-turbo chat completions endpoint with a system message and can identify the OS of the current system. This helps ensure that Linux, Mac, and Windows specific commands tend to be more accurate.  
 
 ## Installation
 
@@ -44,13 +44,33 @@ The application is a Python script that prompts the gpt-3.5-turbo chat completio
 This is most commonly a file called .zshrc or .bashrc in your home directory.  The API key is something that you can get from: https://platform.openai.com/account/api-keys
 
 - Clone this repo to your computer using your terminal.
-- Run `pip install -e .` inside your cloned cbot/ directory
-- Add a `.env` file in your root directory and enter your OpenAI key `OPENAI_API_KEY=<YOUR-KEY-HERE>`
+- `cd ~/<your-directory>/cbot/`
+- Run `pip install -e .` inside your cbot directory
+- Add a `.env` file with your your OpenAI key (`OPENAI_API_KEY=<YOUR-KEY-HERE>`) in your cbot root directory
 - A "cbot" command should be available to use cbot from your CLI, e.g. `cbot -g "Who was the 45th president of the United States?`
 
 ## Context (Memory)
 
-This version of cbot is using OpenAI's chat completion endpoint which allows cbot to reference it's chat history. If you ask it a question and mention a topic you have previously asked about, it should remember its previous responses and answer accordingly. 
+This version of cbot is using OpenAI's chat completion endpoint which allows cbot to reference its chat history. If you ask it a question and mention a topic you have previously asked about, it should remember its previous responses and answer accordingly. 
+
+## (NEW) Conversational Agent with Tools (Google Search)
+
+The conversational agent mode allows cbot to look up information on the internet by using its Google Search tool.
+
+NOTE: To the conversational agent Google search feature you will need to add two additional keys to your .env file `GOOGLE_API_KEY` and `GOOGLE_CSE_ID` for instructions on how to get these keys follow these instructions: https://python.langchain.com/docs/modules/agents/tools/integrations/google_search
+
+To enter chat mode with cbot's conversation agent use the `-a` flag in your command: 
+
+`cbot -a`
+
+The cli is now in conversation mode: 
+
+```
+$> cbot -a
+Entering agent mode. Type 'exit' to end the agent chat.
+You:
+```
+
 
 
 # Advanced tricks...
