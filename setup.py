@@ -9,6 +9,7 @@ setup(
         "python-dotenv",
         "pyperclip",
         "langchain",
+        "google-api-python-client"
     ],
     entry_points={
         "console_scripts": [
