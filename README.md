@@ -49,7 +49,7 @@ The application is a Python script that prompts the gpt-3.5-turbo chat completio
 - Clone this repo to your computer using your terminal.
 - `cd ~/<your-directory>/cbot/`
 - Run `pip install -e .` inside your cbot directory
-- Add a `.env` file with your your OpenAI key (`OPENAI_API_KEY=<YOUR-KEY-HERE>`) in your cbot root directory
+- Modify the `.env.example` file and add your OpenAI key (`OPENAI_API_KEY=<YOUR-KEY-HERE>`)
 - A "cbot" command should be available to use cbot from your CLI, e.g. `cbot -g "Who was the 45th president of the United States?`
 
 ## Context (Memory)
