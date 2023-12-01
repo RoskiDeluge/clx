@@ -1,10 +1,23 @@
 # cbot
 
-Cbot is a command line chat bot that uses the gpt-3.5-turbo model from OpenAI. Like the ChatGPT web app, cbot will answer both general questions and specific questions about anything computer related. An OpenAI API key is required for it to work.
+Cbot is a command line chat bot that uses the gpt-4 model from OpenAI. Like the ChatGPT web app, cbot will answer both general questions and specific questions about anything computer related. An OpenAI API key is required for it to work.
 
 ## Example usage:
 
 ```
+$> cbot -g "In google sheets, how should I change this formula '=sum($B30:$B32)' so I can keep an absolute
+   reference to the sheet it's in 'RD 2023'?"
+   To keep an absolute reference to the sheet named 'RD 2023' in Google Sheets, you can modify the formula by
+   using the `!` operator to specify the sheet name:
+
+   '''
+   =sum('RD 2023'!A1:A10)
+   '''
+
+   Replace `A1:A10` with the range of cells you want to sum in the 'RD 2023' sheet. This formula will calculate
+   the sum of the values in the specified range on the 'RD 2023' sheet, regardless of which sheet the formula is
+   entered on.
+
 $> cbot -g "could you define the original meaning of the word symposium?"
    sure! the word "symposium" comes from ancient greek and originally referred to a drinking party or banquet
    where guests would engage in intellectual discussions, philosophical debates, and cultural performances.
@@ -21,19 +34,6 @@ $> cbot -g "could you summarize plato's dialog by the same name?"
    nature of beauty and goodness. throughout the dialogue, the characters engage in lively debates and discussions,
    exploring the complexities of love and desire. the "symposium" is considered one of plato's most important
    works, and has had a significant influence on weste rn philosophy and literature.
-
-$> cbot -g "In google sheets, how should I change this formula '=sum($B30:$B32)' so I can keep an absolute
-   reference to the sheet it's in 'RD 2023'?"
-   To keep an absolute reference to the sheet named 'RD 2023' in Google Sheets, you can modify the formula by
-   using the `!` operator to specify the sheet name:
-
-   '''
-   =sum('RD 2023'!A1:A10)
-   '''
-
-   Replace `A1:A10` with the range of cells you want to sum in the 'RD 2023' sheet. This formula will calculate
-   the sum of the values in the specified range on the 'RD 2023' sheet, regardless of which sheet the formula is
-   entered on.
 
 ```
 
