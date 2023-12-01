@@ -8,10 +8,12 @@ import sqlite3
 import pyperclip
 from dotenv import load_dotenv
 
-from langchain import OpenAI
+# from langchain import OpenAI
+from langchain.llms import OpenAI
 
 from langchain.agents import Tool, AgentType
 from langchain.memory import ConversationBufferMemory
+# from langchain.utilities import SerpAPIWrapper
 from langchain.utilities import GoogleSearchAPIWrapper
 from langchain.agents import initialize_agent
 
@@ -20,6 +22,7 @@ load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 google_api_key = os.getenv("GOOGLE_API_KEY")
 google_cse_id = os.getenv("GOOGLE_CSE_ID")
+# serpapi_api_key = os.getenv("SERPAPI_API_KEY")
 
 # LangChain Initialization
 llm = OpenAI(temperature=0)
@@ -36,7 +39,7 @@ tools = [
 
 memory = ConversationBufferMemory(memory_key="chat_history")
 agent_chain = initialize_agent(
-    tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=False, memory=memory)
+    tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=True, memory=memory)
 
 global question
 question = ""
@@ -48,6 +51,7 @@ def run_cbot(argv):
     sys.argv = argv
 
     if "-a" in argv:
+        argv.remove("-a")  # Remove the -a flag from argv
         print("Entering agent mode. Type 'exit' to end the agent chat.")
         while True:
             user_input = input("You: ")
@@ -61,19 +65,19 @@ def run_cbot(argv):
         global cache
         cache = sqlite3.connect(home + "/.cbot_cache")
         cache.execute("""
-                    CREATE TABLE IF NOT EXISTS questions
-                    (id INTEGER PRIMARY KEY,
-                    question TEXT,
-                    answer TEXT,
-                    count INTEGER DEFAULT 1,
-                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)""")  # Add timestamp column
+                        CREATE TABLE IF NOT EXISTS questions
+                        (id INTEGER PRIMARY KEY,
+                        question TEXT,
+                        answer TEXT,
+                        count INTEGER DEFAULT 1,
+                        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)""")  # Add timestamp column
 
         # Create conversations table
         cache.execute("""
-                    CREATE TABLE IF NOT EXISTS conversations
-                    (id INTEGER PRIMARY KEY,
-                    messages TEXT,
-                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)""")
+                        CREATE TABLE IF NOT EXISTS conversations
+                        (id INTEGER PRIMARY KEY,
+                        messages TEXT,
+                        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)""")
 
     def closeDB():
         global cache
@@ -108,7 +112,7 @@ def run_cbot(argv):
         cache.execute(
             "INSERT INTO conversations (messages) VALUES (?)", (json.dumps(messages),))
 
-    def fetchQ():
+    def fetchQ(argv):
         question = ""
         # [cbot,-x,  What,is,the,date]  # execute the response
         # [cbot,What,is, the,date]      # no quotes will work
@@ -124,12 +128,14 @@ def run_cbot(argv):
         global execute
         global clip
         global shortcut
+        global agent_mode
+        question_mode = "normal"
         shortcut = ""
         execute = False
         clip = False
-        question_mode = "normal"
+        agent_mode = False
         if ("-h" in question) or (question == " "):  # Return basic help info
-            print("Cbot is a simple utility powered by GPT3")
+            print("Cbot is a simple utility powered by GPT4")
             print("""
             Example usage:
             cbot how do I copy files to my home directory
@@ -182,7 +188,7 @@ def run_cbot(argv):
     else:
         platform = "Linux"
 
-    question = fetchQ()
+    question = fetchQ(sys.argv)
     question = parseOptions(question)
 
     # If we change our training/prompts, just delete the cache and it'll
@@ -197,8 +203,8 @@ def run_cbot(argv):
     if (question_mode == "shortcut"):
         insertQ(question, shortcut)
         print("Saving Shortcut")
-        cache_answer = False
     else:
+        cache_answer = False
         cache_answer = checkQ(question)
 
     response = ""
@@ -212,7 +218,7 @@ def run_cbot(argv):
         if (question_mode == "general"):
             system_message = "You are a helpful assistant. Answer the user's question in the best and most concise way possible."
         else:  # question_mode is "normal"
-            system_message = f"You are a command line translation tool for {platform}. You will provide a concise answer to the user's question with the correct command. Do not provide examples."
+            system_message = f"You are a command line translation tool for {platform}. You will provide a concise answer to the user's question with the correct command."
 
         # Fetch previous prompts from the cache
         previous_prompts = fetch_previous_prompts()
@@ -223,7 +229,7 @@ def run_cbot(argv):
         prompt += [{"role": "user", "content": temp_question}]
 
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4-1106-preview",
             messages=prompt,
             temperature=0,
             max_tokens=500,
