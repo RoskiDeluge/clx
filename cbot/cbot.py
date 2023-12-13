@@ -7,10 +7,8 @@ import sys
 import sqlite3
 import pyperclip
 from dotenv import load_dotenv
-
 # from langchain import OpenAI
 from langchain.llms import OpenAI
-
 from langchain.agents import Tool, AgentType
 from langchain.memory import ConversationBufferMemory
 # from langchain.utilities import SerpAPIWrapper
@@ -23,8 +21,11 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 google_api_key = os.getenv("GOOGLE_API_KEY")
 google_cse_id = os.getenv("GOOGLE_CSE_ID")
 # serpapi_api_key = os.getenv("SERPAPI_API_KEY")
+os.environ['LANGCHAIN_TRACING_V2'] = os.getenv('LANGCHAIN_TRACING_V2')
+os.environ['LANGCHAIN_ENDPOINT'] = os.getenv('LANGCHAIN_ENDPOINT')
+os.environ['LANGCHAIN_API_KEY'] = os.getenv('LANGCHAIN_API_KEY')
+os.environ['LANGCHAIN_PROJECT'] = os.getenv('LANGCHAIN_PROJECT')
 
-# LangChain Initialization
 llm = OpenAI(temperature=0)
 
 # Initialize the Conversational Agent with Search tool
@@ -39,7 +40,7 @@ tools = [
 
 memory = ConversationBufferMemory(memory_key="chat_history")
 agent_chain = initialize_agent(
-    tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=True, memory=memory)
+    tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=False, memory=memory)
 
 global question
 question = ""
