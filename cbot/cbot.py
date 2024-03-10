@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
+from langchain.agents import initialize_agent
+from langchain.utilities import GoogleSearchAPIWrapper
+from langchain.memory import ConversationBufferMemory
+from langchain.agents import Tool, AgentType
+from langchain.llms import OpenAI
+from dotenv import load_dotenv
+import pyperclip
+import sqlite3
+import sys
+import json
 from os.path import expanduser
 import os
 from openai import OpenAI
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-import json
-import sys
-import sqlite3
-import pyperclip
-from dotenv import load_dotenv
 # from langchain import OpenAI
-from langchain.llms import OpenAI
-from langchain.agents import Tool, AgentType
-from langchain.memory import ConversationBufferMemory
 # from langchain.utilities import SerpAPIWrapper
-from langchain.utilities import GoogleSearchAPIWrapper
-from langchain.agents import initialize_agent
 
 load_dotenv()
 
@@ -35,7 +35,7 @@ tools = [
     Tool(
         name="Current Search",
         func=search.run,
-        description="useful for answering questions about current events or the current state of the world"
+        description="useful for answering questions about current events, general topics about people, places, organizations, things or the current state of the world"
     ),
 ]
 
@@ -97,9 +97,9 @@ def run_cbot(argv):
             newcount = int(answer[2]) + 1
             counter = cache.execute(
                 " UPDATE questions SET count = ? WHERE id = ?", (newcount, answer[0]))
-            return(response)
+            return (response)
         else:
-            return(False)
+            return (False)
 
     def insertQ(question_text, answer_text):
         global cache
@@ -165,7 +165,7 @@ def run_cbot(argv):
             question = argv[2]
             shortcut = argv[3]
 
-        return(question)
+        return (question)
 
     def fetch_previous_prompts():
         global cache
@@ -210,9 +210,9 @@ def run_cbot(argv):
         cache_answer = checkQ(question)
 
     response = ""
-    if not(cache_answer) and ((question_mode == "general") or (question_mode == "normal")):
+    if not (cache_answer) and ((question_mode == "general") or (question_mode == "normal")):
         temp_question = question
-        if not("?" in question):
+        if not ("?" in question):
             temp_question = question + "?"  # GPT produces better results
             # if there's a question mark.
             # using a temp variable so the ? doesn't get cached
@@ -231,18 +231,18 @@ def run_cbot(argv):
         prompt += [{"role": "user", "content": temp_question}]
 
         response = client.chat.completions.create(model="gpt-4-1106-preview",
-        messages=prompt,
-        temperature=0,
-        max_tokens=500,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0)
+                                                  messages=prompt,
+                                                  temperature=0,
+                                                  max_tokens=500,
+                                                  top_p=1,
+                                                  frequency_penalty=0,
+                                                  presence_penalty=0)
         result = response.choices[0].message.content
         insertQ(question, result)
 
     else:
         result = cache_answer
-        if not(question_mode == "shortcut"):
+        if not (question_mode == "shortcut"):
             print("💾 Cache Hit")
 
     if clip:
@@ -254,7 +254,7 @@ def run_cbot(argv):
         else:
             result = os.system(result)
     else:
-        if not(question_mode == "shortcut"):
+        if not (question_mode == "shortcut"):
             print(result)
 
     closeDB()
