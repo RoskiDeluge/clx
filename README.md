@@ -60,7 +60,7 @@ This version of cbot is using OpenAI's chat completion endpoint which allows cbo
 
 The conversational agent mode allows cbot to look up information on the internet by using its Google Search tool.
 
-NOTE: To the conversational agent Google search feature you will need to add two additional keys to your .env file `GOOGLE_API_KEY` and `GOOGLE_CSE_ID` for instructions on how to get these keys follow these instructions: https://python.langchain.com/docs/modules/agents/tools/integrations/google_search
+NOTE: To add the conversational agent Google search tool you will need to add two additional keys to your .env file `GOOGLE_API_KEY` and `GOOGLE_CSE_ID` for instructions on how to get these keys follow these instructions: https://python.langchain.com/docs/modules/agents/tools/integrations/google_search
 
 To enter chat mode with cbot's conversation agent use the `-a` flag in your command:
 
@@ -75,6 +75,17 @@ You:
 ```
 
 # Advanced tricks...
+
+## (NEW) LLM Observability with LangSmith
+
+[LangSmith](https://www.langchain.com/langsmith) is an observability application created by the LangChain team to provide detailed infomation about LLM responses. In order to add this capability to your Cbot, you will also need to add the following variables to your .env file: 
+
+```
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_ENDPOINT="https://api.smith.langchain.com"
+LANGCHAIN_API_KEY="ls__..."
+LANGCHAIN_PROJECT="your-project-name"
+```
 
 You can call cbot with a **-s** option. This will save any command as a shortcut with whatever name you choose. The first parameter is the name of the command and the second is the command itself in quotes.
 
