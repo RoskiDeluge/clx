@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 from os.path import expanduser
 import os
-import openai
+from openai import OpenAI
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 import json
 import sys
 import sqlite3
@@ -17,7 +19,6 @@ from langchain.agents import initialize_agent
 
 load_dotenv()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # LangChain Initialization
 llm = OpenAI(temperature=0)
@@ -218,16 +219,14 @@ def run_cbot(argv):
 
         prompt += [{"role": "user", "content": temp_question}]
 
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=prompt,
-            temperature=0,
-            max_tokens=500,
-            top_p=1,
-            frequency_penalty=0,
-            presence_penalty=0
-        )
-        result = response.choices[0].message["content"]
+        response = client.chat.completions.create(model="gpt-3.5-turbo",
+        messages=prompt,
+        temperature=0,
+        max_tokens=500,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0)
+        result = response.choices[0].message.content
         insertQ(question, result)
 
     else:
