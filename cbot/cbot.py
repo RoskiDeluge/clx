@@ -3,7 +3,8 @@ from langchain.agents import initialize_agent
 from langchain.utilities import GoogleSearchAPIWrapper
 from langchain.memory import ConversationBufferMemory
 from langchain.agents import Tool, AgentType
-from langchain.llms import OpenAI
+from langchain_community.chat_models import ChatOpenAI
+# from langchain.utilities import SerpAPIWrapper
 from dotenv import load_dotenv
 import pyperclip
 import sqlite3
@@ -14,8 +15,6 @@ import os
 from openai import OpenAI
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-# from langchain import OpenAI
-# from langchain.utilities import SerpAPIWrapper
 
 load_dotenv()
 
@@ -27,7 +26,7 @@ os.environ['LANGCHAIN_ENDPOINT'] = os.getenv('LANGCHAIN_ENDPOINT')
 os.environ['LANGCHAIN_API_KEY'] = os.getenv('LANGCHAIN_API_KEY')
 os.environ['LANGCHAIN_PROJECT'] = os.getenv('LANGCHAIN_PROJECT')
 
-llm = OpenAI(temperature=0)
+llm = ChatOpenAI()
 
 # Initialize the Conversational Agent with Search tool
 search = GoogleSearchAPIWrapper()
