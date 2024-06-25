@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-from langchain.agents import initialize_agent
-from langchain.utilities import GoogleSearchAPIWrapper
+from langchain.agents import initialize_agent, load_tools
 from langchain.memory import ConversationBufferMemory
 from langchain.agents import Tool, AgentType
 from langchain_community.chat_models import ChatOpenAI
-# from langchain.utilities import SerpAPIWrapper
 from dotenv import load_dotenv
 import pyperclip
 import sqlite3
@@ -18,9 +16,10 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 load_dotenv()
 
-google_api_key = os.getenv("GOOGLE_API_KEY")
-google_cse_id = os.getenv("GOOGLE_CSE_ID")
+# google_api_key = os.getenv("GOOGLE_API_KEY")
+# google_cse_id = os.getenv("GOOGLE_CSE_ID")
 # serpapi_api_key = os.getenv("SERPAPI_API_KEY")
+serper_api_key = os.getenv("SERPERAPI_API_KEY")
 os.environ['LANGCHAIN_TRACING_V2'] = os.getenv('LANGCHAIN_TRACING_V2')
 os.environ['LANGCHAIN_ENDPOINT'] = os.getenv('LANGCHAIN_ENDPOINT')
 os.environ['LANGCHAIN_API_KEY'] = os.getenv('LANGCHAIN_API_KEY')
@@ -29,18 +28,12 @@ os.environ['LANGCHAIN_PROJECT'] = os.getenv('LANGCHAIN_PROJECT')
 llm = ChatOpenAI()
 
 # Initialize the Conversational Agent with Search tool
-search = GoogleSearchAPIWrapper()
-tools = [
-    Tool(
-        name="Current Search",
-        func=search.run,
-        description="useful for answering questions about current events, general topics about people, places, organizations, things or the current state of the world"
-    ),
-]
+
+tools = load_tools(["google-serper"], llm=llm)
 
 memory = ConversationBufferMemory(memory_key="chat_history")
 agent_chain = initialize_agent(
-    tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=False, memory=memory)
+    tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=True, memory=memory)
 
 global question
 question = ""
