@@ -219,7 +219,7 @@ def run_cbot(argv):
 
         prompt += [{"role": "user", "content": temp_question}]
 
-        response = client.chat.completions.create(model="gpt-4-1106-preview",
+        response = client.chat.completions.create(model="gpt-4o",
                                                   messages=prompt,
                                                   temperature=0,
                                                   max_tokens=500,
