@@ -113,6 +113,6 @@ Cbot saves every question and response in a SQLite3 database located in the home
 
 ---
 
-Current version by Roberto Delgado.
-Initial version by Gregory Raiz.
+Forked by Roberto Delgado.
+Thanks to Gregory Raiz for the original version.
 This code is free to use under the MIT liscense.
