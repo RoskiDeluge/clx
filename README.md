@@ -58,9 +58,9 @@ This version of cbot is using OpenAI's chat completion endpoint which allows cbo
 
 ## (NEW) Conversational Agent with Tools (Google Search)
 
-The conversational agent mode allows cbot to look up information on the internet by using its Google Search tool.
+The conversational agent mode allows cbot to look up information on the internet by using its search tool.
 
-NOTE: To add the conversational agent Google search tool you will need to add two additional keys to your .env file `GOOGLE_API_KEY` and `GOOGLE_CSE_ID` for instructions on how to get these keys follow these instructions: https://python.langchain.com/docs/modules/agents/tools/integrations/google_search
+NOTE: To add the search tool to the agent you will need to add an api key to your env file ("SERPERAPI_API_KEY") for Serper: https://serper.dev
 
 To enter chat mode with cbot's conversation agent use the `-a` flag in your command:
 

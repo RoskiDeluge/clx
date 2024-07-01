@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from langchain.agents import initialize_agent, load_tools
 from langchain.memory import ConversationBufferMemory
-from langchain.agents import Tool, AgentType
+from langchain.agents import AgentType
 from langchain_community.chat_models import ChatOpenAI
 from dotenv import load_dotenv
 import pyperclip
@@ -16,9 +16,6 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 load_dotenv()
 
-# google_api_key = os.getenv("GOOGLE_API_KEY")
-# google_cse_id = os.getenv("GOOGLE_CSE_ID")
-# serpapi_api_key = os.getenv("SERPAPI_API_KEY")
 serper_api_key = os.getenv("SERPERAPI_API_KEY")
 os.environ['LANGCHAIN_TRACING_V2'] = os.getenv('LANGCHAIN_TRACING_V2')
 os.environ['LANGCHAIN_ENDPOINT'] = os.getenv('LANGCHAIN_ENDPOINT')
