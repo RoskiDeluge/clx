@@ -30,7 +30,7 @@ tools = load_tools(["google-serper"], llm=llm)
 
 memory = ConversationBufferMemory(memory_key="chat_history")
 agent_chain = initialize_agent(
-    tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=True, memory=memory)
+    tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=False, memory=memory)
 
 global question
 question = ""
