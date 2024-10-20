@@ -25,10 +25,9 @@ os.environ['LANGCHAIN_PROJECT'] = os.getenv('LANGCHAIN_PROJECT')
 llm = ChatOpenAI()
 
 # Initialize the Conversational Agent with Search tool
-
 tools = load_tools(["google-serper"], llm=llm)
-
 memory = ConversationBufferMemory(memory_key="chat_history")
+
 agent_chain = initialize_agent(
     tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=False, memory=memory)
 
