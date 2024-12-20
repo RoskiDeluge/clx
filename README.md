@@ -1,5 +1,8 @@
 # cbot
 
+# UPDATE: 
+## Cbot has been refactored to use Ollama instead of OpenAI. You will need to install Ollama, download a desired model and adjust the code within the `call_llama()` function to use Cbot. 
+
 Cbot is a command line chat bot that uses the gpt-4 model from OpenAI. Like the ChatGPT web app, cbot will answer both general questions and specific questions about anything computer related. An OpenAI API key is required for it to work.
 
 ## Example usage:
