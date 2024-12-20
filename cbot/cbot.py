@@ -1,39 +1,27 @@
 #!/usr/bin/env python3
-from langchain.agents import initialize_agent, load_tools
-from langchain.memory import ConversationBufferMemory
-from langchain.agents import AgentType
-from langchain_community.chat_models import ChatOpenAI
-from dotenv import load_dotenv
-import pyperclip
+import requests
 import sqlite3
 import sys
 import json
 from os.path import expanduser
 import os
-from openai import OpenAI
-
-load_dotenv()
-
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+import pyperclip
 
 
-serper_api_key = os.getenv("SERPERAPI_API_KEY")
-# os.environ['LANGCHAIN_TRACING_V2'] = os.getenv('LANGCHAIN_TRACING_V2')
-# os.environ['LANGCHAIN_ENDPOINT'] = os.getenv('LANGCHAIN_ENDPOINT')
-# os.environ['LANGCHAIN_API_KEY'] = os.getenv('LANGCHAIN_API_KEY')
-# os.environ['LANGCHAIN_PROJECT'] = os.getenv('LANGCHAIN_PROJECT')
+def call_llama(prompt, system_message=""):
+    full_prompt = f"{system_message}\n{prompt}" if system_message else prompt
+    # This is a text completion, not a chat completion. Will need to refactor to the messages array to add context.
+    payload = {
+        "model": "llama3.1",
+        "prompt": full_prompt,
+        "stream": False
+    }
+    # Fully local inference via ollama
+    response = requests.post("http://localhost:11434/api/generate",
+                             json=payload)
 
-llm = ChatOpenAI()
-
-# Initialize the Conversational Agent with Search tool
-tools = load_tools(["google-serper"], llm=llm)
-memory = ConversationBufferMemory(memory_key="chat_history")
-
-agent_chain = initialize_agent(
-    tools, llm, agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION, verbose=False, memory=memory)
-
-global question
-question = ""
+    result = response.json()
+    return result["response"]
 
 
 def run_cbot(argv):
@@ -41,16 +29,17 @@ def run_cbot(argv):
     global sys
     sys.argv = argv
 
-    if "-a" in argv:
-        argv.remove("-a")  # Remove the -a flag from argv
-        print("Entering agent mode. Type 'exit' to end the agent chat.")
-        while True:
-            user_input = input("You: ")
-            if user_input.lower() == 'exit':
-                print("Exiting chat mode.")
-                sys.exit()  # Terminate the program immediately
-            response = agent_chain.run(input=user_input)
-            print("agent:", response)
+    # Agent mode disabled until it can be replicated locally via ollama
+    # if "-a" in argv:
+    #     argv.remove("-a")  # Remove the -a flag from argv
+    #     print("Entering agent mode. Type 'exit' to end the agent chat.")
+    #     while True:
+    #         user_input = input("You: ")
+    #         if user_input.lower() == 'exit':
+    #             print("Exiting chat mode.")
+    #             sys.exit()  # Terminate the program immediately
+    #         response = agent_chain.run(input=user_input)
+    #         print("agent:", response)
 
     def initDB():
         global cache
@@ -211,22 +200,24 @@ def run_cbot(argv):
         else:  # question_mode is "normal"
             system_message = f"You are a command line translation tool for {platform}. You will provide a concise answer to the user's question with the correct command."
 
+        # This code use to handle passing the context to cbot via the chat messages array
         # Fetch previous prompts from the cache
         previous_prompts = fetch_previous_prompts()
 
-        prompt = [{"role": "system", "content": system_message}] + \
-            previous_prompts
+        # prompt = [{"role": "system", "content": system_message}] + \
+        #     previous_prompts
 
-        prompt += [{"role": "user", "content": temp_question}]
+        # prompt += [{"role": "user", "content": temp_question}]
 
-        response = client.chat.completions.create(model="gpt-4o-mini",
-                                                  messages=prompt,
-                                                  temperature=0,
-                                                  max_tokens=250,
-                                                  top_p=1,
-                                                  frequency_penalty=0,
-                                                  presence_penalty=0)
-        result = response.choices[0].message.content
+        # response = client.chat.completions.create(model="gpt-4o-mini",
+        #                                           messages=prompt,
+        #                                           temperature=0,
+        #                                           max_tokens=250,
+        #                                           top_p=1,
+        #                                           frequency_penalty=0,
+        #                                           presence_penalty=0)
+        # result = response.choices[0].message.content
+        result = call_llama(temp_question, system_message)
         insertQ(question, result)
 
     else:
