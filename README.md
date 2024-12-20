@@ -1,4 +1,4 @@
-# cbot
+# Cbot
 
 # UPDATE: 
 ## Cbot has been refactored to use Ollama instead of OpenAI. You will need to install Ollama, download a desired model and adjust the code within the `call_llama()` function to use Cbot. 
@@ -54,6 +54,7 @@ The application is a Python script that prompts the gpt-4 chat completions endpo
 - Run `pip install -e .` inside your cbot directory
 - Modify the `.env.example` file and add your OpenAI key (`OPENAI_API_KEY=<YOUR-KEY-HERE>`)
 - A "cbot" command should be available to use cbot from your CLI, e.g. `cbot -g "Who was the 45th president of the United States?`
+- cbot will automatically store questions and responses in a local SQLite database located at `~/.cbot_cache`
 
 ## Context (Memory)
 

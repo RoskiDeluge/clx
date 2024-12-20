@@ -115,7 +115,7 @@ def run_cbot(argv):
         clip = False
         agent_mode = False
         if ("-h" in question) or (question == " "):  # Return basic help info
-            print("Cbot is a simple utility powered by GPT4")
+            print("Cbot is a simple utility powered by AI (Ollama)")
             print("""
             Example usage:
             cbot how do I copy files to my home directory
