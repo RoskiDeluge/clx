@@ -6,7 +6,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         "requests",
-        "pyperclip",
+        "pyperclip"
     ],
     entry_points={
         "console_scripts": [

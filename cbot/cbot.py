@@ -12,7 +12,7 @@ def call_llama(prompt, system_message=""):
     full_prompt = f"{system_message}\n{prompt}" if system_message else prompt
     # This is a text completion, not a chat completion. Will need to refactor to the messages array to add context.
     payload = {
-        "model": "llama3.1",
+        "model": "llama3.2",
         "prompt": full_prompt,
         "stream": False
     }
@@ -38,7 +38,7 @@ def run_cbot(argv):
     #         if user_input.lower() == 'exit':
     #             print("Exiting chat mode.")
     #             sys.exit()  # Terminate the program immediately
-    #         response = agent_chain.run(input=user_input)
+    #         response = agent.run(user_input)
     #         print("agent:", response)
 
     def initDB():
