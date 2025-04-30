@@ -4,13 +4,10 @@ The application is a Python script that prompts the Llama/Ollama text completion
 
 ## Installation
 
-- Add your OpenAI API key into an environmental variable. The easiest way to do this is to add to to your command line shell by adding the line: export OPENAI_API_KEY="then_enter_your_key"
-  This is most commonly a file called .zshrc or .bashrc in your home directory. The API key is something that you can get from: https://platform.openai.com/account/api-keys
-
+- NOTE: For the script to work, you will need to have Ollama running in the background. To install a desired Ollama model go to https://ollama.com/search
 - Clone this repo to your computer using your terminal.
 - `cd ~/<your-directory>/cbot/`
 - Run `pip install -e .` inside your cbot directory
-- Modify the `.env.example` file and add your OpenAI key (`OPENAI_API_KEY=<YOUR-KEY-HERE>`)
 - A "cbot" command should be available to use cbot from your CLI, e.g. `cbot -g "Who was the 45th president of the United States?`
 - cbot will automatically store questions and responses in a local SQLite database located at `~/.cbot_cache`
   
