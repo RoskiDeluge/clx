@@ -41,7 +41,7 @@ Cbot has a -g option to ask general questions. The results when you ask a genera
 ```
 $> cbot -g "Who was the 23rd president?"
   Herbert Hoover
-$> cbot -g "What is the meaning of life?"p
+$> cbot -g "What is the meaning of life?"
    42
 ```
 
