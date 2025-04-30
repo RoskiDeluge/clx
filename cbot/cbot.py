@@ -8,11 +8,11 @@ import os
 import pyperclip
 
 
-def call_llama(prompt, system_message=""):
+def call_model(prompt, system_message="", model="llama3.2"):
     full_prompt = f"{system_message}\n{prompt}" if system_message else prompt
     # This is a text completion, not a chat completion. Will need to refactor to the messages array to add context.
     payload = {
-        "model": "llama3.2",
+        "model": model,
         "prompt": full_prompt,
         "stream": False
     }
@@ -27,6 +27,20 @@ def call_llama(prompt, system_message=""):
 def run_cbot(argv):
 
     global sys
+    # Initialize argv
+    sys.argv = argv
+
+    # Model selection flags: -l32 for llama3.2, -ds for deepseek-r1
+    model_name = "llama3.2"
+    filtered_argv = [argv[0]]
+    for arg in argv[1:]:
+        if arg == "-l32":
+            model_name = "llama3.2"
+        elif arg == "-ds":
+            model_name = "deepseek-r1"
+        else:
+            filtered_argv.append(arg)
+    argv = filtered_argv
     sys.argv = argv
 
     # Agent mode disabled until it can be replicated locally via ollama
@@ -217,7 +231,7 @@ def run_cbot(argv):
         #                                           frequency_penalty=0,
         #                                           presence_penalty=0)
         # result = response.choices[0].message.content
-        result = call_llama(temp_question, system_message)
+        result = call_model(temp_question, system_message, model_name)
         insertQ(question, result)
 
     else:
