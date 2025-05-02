@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cbot-cli"
+version = "0.1.3"
+description = "A local-first CLI helper for productivity and automation."
+readme = "README.md"
+requires-python = ">=3.7"
+authors = [
+    { name="Roberto L. Delgado", email="roberto@delgadodev.xyz" }
+]
+license = { text = "MIT" }
+keywords = ["cli", "productivity", "automation", "local-first"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: End Users/Desktop",
+    "Environment :: Console"
+]
+dependencies = [
+    "requests",
+    "pyperclip"
+]
+
+[project.urls]
+Homepage = "https://github.com/roskideluge/cbot"
+Repository = "https://github.com/roskideluge/cbot"
+Issues = "https://github.com/roskideluge/cbot/issues"
+
+[project.scripts]
+cbot = "cbot.__main__:main"
+cbot-cli = "cbot.__main__:main"

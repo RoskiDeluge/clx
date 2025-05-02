@@ -1,5 +1,5 @@
 import sys
-from .cbot import run_cbot
+from .cbot_cli import run_cbot
 
 
 def main():
