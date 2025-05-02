@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: cbot-cli
-Version: 0.1.3
+Version: 0.1.4
 Summary: A local-first CLI helper for productivity and automation.
 Author-email: "Roberto L. Delgado" <roberto@delgadodev.xyz>
 License: MIT
