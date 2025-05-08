@@ -1,15 +1,20 @@
-## Cbot Basics
+## Cbot-cli Basics
 
 The application is a Python script that prompts the Llama/Ollama text completion endpoint with a system message and can identify the OS of the current system. This helps ensure that Linux, Mac, and Windows specific commands tend to be more accurate.
 
 ## Installation
 
+`pip install cbot-cli`
+
+- - A "cbot" command should be available to use cbot from your CLI, e.g. `cbot -g "Who was the 45th president of the United States?`
+- cbot will automatically store questions and responses in a local SQLite database located at `~/.cbot_cache`
+
 - NOTE: For the script to work, you will need to have Ollama running in the background. To install a desired Ollama model go to https://ollama.com/search
+
+## For Development: 
 - Clone this repo to your computer using your terminal.
 - `cd ~/<your-directory>/cbot/`
 - Run `pip install -e .` inside your cbot directory
-- A "cbot" command should be available to use cbot from your CLI, e.g. `cbot -g "Who was the 45th president of the United States?`
-- cbot will automatically store questions and responses in a local SQLite database located at `~/.cbot_cache`
   
 ## Model Selection
   
