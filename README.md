@@ -4,9 +4,10 @@ The application is a Python script that prompts the Llama/Ollama text completion
 
 ## Installation
 
+In your terminal run:
 `pip install cbot-cli`
 
-- - A "cbot" command should be available to use cbot from your CLI, e.g. `cbot -g "Who was the 45th president of the United States?`
+- A "cbot" command should be available to use cbot from your CLI, e.g. `cbot -g "Who was the 45th president of the United States?`
 - cbot will automatically store questions and responses in a local SQLite database located at `~/.cbot_cache`
 
 - NOTE: For the script to work, you will need to have Ollama running in the background. To install a desired Ollama model go to https://ollama.com/search
