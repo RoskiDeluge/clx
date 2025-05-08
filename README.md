@@ -8,6 +8,7 @@ In your terminal run:
 `pip install cbot-cli`
 
 - A "cbot-cli" command should be available to use cbot from your CLI, e.g. `cbot-cli -g "Who was the 45th president of the United States?`
+
 - cbot will automatically store questions and responses in a local SQLite database located at `~/.cbot_cache`
 
 - NOTE: For the script to work, you will need to have Ollama running in the background. To install a desired Ollama model go to https://ollama.com/search
@@ -50,8 +51,6 @@ $> cbot-cli -g "Who was the 23rd president?"
 $> cbot-cli -g "What is the meaning of life?"
    42
 ```
-
-Cbot saves every question and response in a SQLite3 database located in the home directory .cbot_cache. You can inspect or delete this directory, you can also directly add or remove shortcuts if needed.
 
 #### Credits
 
