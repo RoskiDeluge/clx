@@ -7,7 +7,7 @@ The application is a Python script that prompts the Llama/Ollama text completion
 In your terminal run:
 `pip install cbot-cli`
 
-- A "cbot" command should be available to use cbot from your CLI, e.g. `cbot -g "Who was the 45th president of the United States?`
+- A "cbot-cli" command should be available to use cbot from your CLI, e.g. `cbot-cli -g "Who was the 45th president of the United States?`
 - cbot will automatically store questions and responses in a local SQLite database located at `~/.cbot_cache`
 
 - NOTE: For the script to work, you will need to have Ollama running in the background. To install a desired Ollama model go to https://ollama.com/search
@@ -27,16 +27,16 @@ You can choose which Ollama model Cbot uses by passing one of these flags before
 Example:
   
 ```
-cbot -l32 -g "List files in my home directory"
-cbot -ds -g "Explain how a for loop works in Python"
+cbot-cli -l32 -g "List files in my home directory"
+cbot-cli -ds -g "Explain how a for loop works in Python"
 ```
 
 You can also call cbot with a **-s** option. This will save any command as a shortcut with whatever name you choose. The first parameter is the name of the command and the second is the command itself in quotes.
 
 ```
-$> cbot -s nap "pmset sleepnow"
+$> cbot-cli -s nap "pmset sleepnow"
    Saving shortcut nap, will return: pmset sleepnow
-$> cbot -x nap
+$> cbot-cli -x nap
    Sleeping now...
 ```
 
@@ -45,9 +45,9 @@ To copy a command directly into the clipboard use the **-c** option. Can be usef
 Cbot has a -g option to ask general questions. The results when you ask a general question will not be formated as a command line. This is useful for asking general questions, historical facts or other information not likely to be formated as a command.
 
 ```
-$> cbot -g "Who was the 23rd president?"
+$> cbot-cli -g "Who was the 23rd president?"
   Herbert Hoover
-$> cbot -g "What is the meaning of life?"
+$> cbot-cli -g "What is the meaning of life?"
    42
 ```
 
@@ -57,6 +57,6 @@ Cbot saves every question and response in a SQLite3 database located in the home
 
 ---
 
-Forked by Roberto Delgado.
-Thanks to Gregory Raiz for the original version.
+Forked by Roberto Delgado. \
+Thanks to Gregory Raiz for the original version. \
 This code is free to use under the MIT liscense.
