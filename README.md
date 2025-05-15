@@ -4,8 +4,10 @@ The application is a Python script that prompts the Llama/Ollama text completion
 
 ## Installation
 
-In your terminal run:
-`pip install cbot-cli`
+## For Development: 
+- Clone this repo to your computer using your terminal.
+- `cd ~/<your-directory>/cbot/`
+- Run `pip install -e .` inside your cbot directory
 
 - A "cbot-cli" command should be available to use cbot from your CLI, e.g. `cbot-cli -g "Who was the 45th president of the United States?`
 
@@ -13,11 +15,7 @@ In your terminal run:
 
 - NOTE: For the script to work, you will need to have Ollama running in the background. To install a desired Ollama model go to https://ollama.com/search
 
-## For Development: 
-- Clone this repo to your computer using your terminal.
-- `cd ~/<your-directory>/cbot/`
-- Run `pip install -e .` inside your cbot directory
-  
+
 ## Model Selection
   
 You can choose which Ollama model Cbot uses by passing one of these flags before your question:
