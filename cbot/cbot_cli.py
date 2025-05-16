@@ -138,6 +138,7 @@ def run_cbot(argv):
             cbot -c "how do I install homebrew?"      (copies the result to clipboard)
             cbot -x what is the date                  (executes the result)
             cbot -g who was the 22nd president        (runs in general question mode)
+            cbot -a                                   (runs in agent mode)
             """)
             exit()
 
