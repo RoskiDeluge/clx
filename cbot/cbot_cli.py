@@ -137,8 +137,12 @@ def run_cbot(argv):
             cbot -c "how do I install homebrew?"      (copies the result to clipboard)
             cbot -x what is the date                  (executes the result)
             cbot -g who was the 22nd president        (runs in general question mode)
+            cbot -m                                   (prints the converstaion history)
             """)
             exit()
+
+        if ("-m" in question):
+            question_mode = "history"
 
         if ("-x" in question):      # Execute the command
             execute = True
@@ -161,8 +165,9 @@ def run_cbot(argv):
 
     def fetch_previous_prompts():
         global cache
+
         prompts = cache.execute(
-            "SELECT messages FROM conversations ORDER BY timestamp DESC LIMIT 6"
+            "SELECT messages FROM conversations ORDER BY timestamp DESC LIMIT 10"
         ).fetchall()
         previous_prompts = []
 
@@ -197,6 +202,8 @@ def run_cbot(argv):
     if (question_mode == "shortcut"):
         insertQ(question, shortcut)
         print("Saving Shortcut")
+    elif (question_mode == "history"):
+        cache_answer = False
     else:
         cache_answer = False
         cache_answer = checkQ(question)
@@ -233,7 +240,9 @@ def run_cbot(argv):
         # result = response.choices[0].message.content
         result = call_model(temp_question, system_message, model_name)
         insertQ(question, result)
-
+    elif question_mode == "history":
+        # TODO: pretty print the prompts and answers
+        result = fetch_previous_prompts()
     else:
         result = cache_answer
         if not (question_mode == "shortcut"):
