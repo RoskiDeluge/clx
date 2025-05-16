@@ -44,16 +44,17 @@ def run_cbot(argv):
     sys.argv = argv
 
     # Agent mode disabled until it can be replicated locally via ollama
-    # if "-a" in argv:
-    #     argv.remove("-a")  # Remove the -a flag from argv
-    #     print("Entering agent mode. Type 'exit' to end the agent chat.")
-    #     while True:
-    #         user_input = input("You: ")
-    #         if user_input.lower() == 'exit':
-    #             print("Exiting chat mode.")
-    #             sys.exit()  # Terminate the program immediately
-    #         response = agent.run(user_input)
-    #         print("agent:", response)
+    if "-a" in argv:
+        argv.remove("-a")  # Remove the -a flag from argv
+        agent = Agent()
+        print("Entering agent mode. Type 'exit' to end the agent chat.")
+        while True:
+            user_input = input("You: ")
+            if user_input.lower() == 'exit':
+                print("Exiting chat mode.")
+                sys.exit()  # Terminate the program immediately
+            response = agent.run(user_input)
+            print("Agent:", response)
 
     def initDB():
         global cache
@@ -252,3 +253,9 @@ def run_cbot(argv):
             print(result)
 
     closeDB()
+
+
+# Eventually should be extracted from this current file
+class Agent:
+    def run(self, input):
+        return call_model(input)
