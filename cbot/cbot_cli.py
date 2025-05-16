@@ -241,8 +241,15 @@ def run_cbot(argv):
         result = call_model(temp_question, system_message, model_name)
         insertQ(question, result)
     elif question_mode == "history":
-        # TODO: pretty print the prompts and answers
-        result = fetch_previous_prompts()
+        print("CHAT HISTORY (last 10 messages):")
+        messages = []
+        conversation_history = fetch_previous_prompts()
+        for message in conversation_history:
+            if message['role'] == 'user':
+                messages.append("User: " + message['content'])
+            elif message['role'] == 'assistant':
+                messages.append("Assistant: " + message['content'] + "\n")
+        result = "\n".join(messages)
     else:
         result = cache_answer
         if not (question_mode == "shortcut"):
