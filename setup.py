@@ -6,7 +6,9 @@ setup(
     packages=find_packages(),
     install_requires=[
         "requests",
-        "pyperclip"
+        "pyperclip",
+        "openai",
+        "python-dotenv"
     ],
     entry_points={
         "console_scripts": [
