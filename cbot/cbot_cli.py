@@ -6,7 +6,7 @@ import json
 from os.path import expanduser
 import os
 import pyperclip
-from openai import OpenAI
+from openai import OpenAI, OpenAIError, RateLimitError
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -16,12 +16,22 @@ def call_model(prompt, system_message="", model="llama3.2"):
     full_prompt = f"{system_message}\n{prompt}" if system_message else prompt
 
     if "openai" in model:
-        client = OpenAI()
+        try:
+            client = OpenAI()
 
-        result = client.responses.create(
-            model="o4-mini",
-            input=full_prompt
-        ).output_text
+            result = client.responses.create(
+                model="o4-mini",
+                input=full_prompt
+            ).output_text
+        except RateLimitError as e:
+            print("Rate Limit Error Ocurred: ", e)
+            print(
+                "Insufficient quota: Please check OpenAI API usage and billing details.")
+            sys.exit(1)
+        except OpenAIError as e:
+            print("Open AI Error Occurred: ", e)
+            sys.exit(1)
+
     else:
         # This is a text completion, not a chat completion. Will need to refactor to the messages array to add context.
         payload = {
