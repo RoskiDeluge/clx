@@ -6,22 +6,46 @@ import json
 from os.path import expanduser
 import os
 import pyperclip
+from openai import OpenAI, OpenAIError, RateLimitError
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def call_model(prompt, system_message="", model="llama3.2"):
     full_prompt = f"{system_message}\n{prompt}" if system_message else prompt
-    # This is a text completion, not a chat completion. Will need to refactor to the messages array to add context.
-    payload = {
-        "model": model,
-        "prompt": full_prompt,
-        "stream": False
-    }
-    # Fully local inference via ollama
-    response = requests.post("http://localhost:11434/api/generate",
-                             json=payload)
 
-    result = response.json()
-    return result["response"]
+    if "openai" in model:
+        try:
+            client = OpenAI()
+
+            result = client.responses.create(
+                model="o4-mini",
+                input=full_prompt
+            ).output_text
+        except RateLimitError as e:
+            print("Rate Limit Error Ocurred: ", e)
+            print(
+                "Insufficient quota: Please check OpenAI API usage and billing details.")
+            sys.exit(1)
+        except OpenAIError as e:
+            print("Open AI Error Occurred: ", e)
+            sys.exit(1)
+
+    else:
+        # This is a text completion, not a chat completion. Will need to refactor to the messages array to add context.
+        payload = {
+            "model": model,
+            "prompt": full_prompt,
+            "stream": False
+        }
+        # Fully local inference via ollama
+        response = requests.post("http://localhost:11434/api/generate",
+                                 json=payload)
+
+        result = response.json()["response"]
+
+    return result
 
 
 def run_cbot(argv):
@@ -38,6 +62,8 @@ def run_cbot(argv):
             model_name = "llama3.2"
         elif arg == "-ds":
             model_name = "deepseek-r1"
+        elif arg == "-oa4m":
+            model_name = "openai-o4-mini"
         else:
             filtered_argv.append(arg)
     argv = filtered_argv

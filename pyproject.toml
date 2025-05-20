@@ -22,7 +22,9 @@ classifiers = [
 ]
 dependencies = [
     "requests",
-    "pyperclip"
+    "pyperclip",
+    "openai",
+    "python-dotenv"
 ]
 
 [project.urls]
