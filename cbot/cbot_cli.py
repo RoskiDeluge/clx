@@ -70,16 +70,21 @@ def run_cbot(argv):
     sys.argv = argv
 
     # Agent mode disabled until it can be replicated locally via ollama
-    # if "-a" in argv:
-    #     argv.remove("-a")  # Remove the -a flag from argv
-    #     print("Entering agent mode. Type 'exit' to end the agent chat.")
-    #     while True:
-    #         user_input = input("You: ")
-    #         if user_input.lower() == 'exit':
-    #             print("Exiting chat mode.")
-    #             sys.exit()  # Terminate the program immediately
-    #         response = agent.run(user_input)
-    #         print("agent:", response)
+    if "-a" in argv:
+        argv.remove("-a")  # Remove the -a flag from argv
+
+        # Prompt to include conversation history to context
+        prompt = """You are an AI assistant. When responding to the user's current prompt, consider the full conversation history to maintain context, consistency, and continuity. If no conversation history is available, treat this as a start of a new conversation and do not attempt to reference earlier messages. Prioritize relevance, clarity, and helpfulness in your response."""
+        agent = Agent(
+            [], prompt)
+        print("Entering agent mode. Type 'exit' to end the agent chat.")
+        while True:
+            user_input = input("You: ")
+            if user_input.lower() == 'exit':
+                print("Exiting chat mode.")
+                sys.exit()  # Terminate the program immediately
+            response = agent.run(user_input)
+            print("Agent:", response, "\n")
 
     def initDB():
         global cache
@@ -164,6 +169,7 @@ def run_cbot(argv):
             cbot -x what is the date                  (executes the result)
             cbot -g who was the 22nd president        (runs in general question mode)
             cbot -m                                   (prints the converstaion history)
+            cbot -a                                   (runs in agent mode)
             """)
             exit()
 
@@ -294,3 +300,30 @@ def run_cbot(argv):
             print(result)
 
     closeDB()
+
+
+# Eventually should be extracted from this current file
+class Agent:
+    def __init__(self, memory, prompt):
+        self.memory = memory
+        self.prompt = prompt
+
+    def run(self, input):
+        # Prevent update memory if a blank or prompt with only spaces is given
+        if not input.strip():
+            result = "Please type in a prompt"
+            return result
+
+        # TODO: Error checking to handle context window overflow
+        history = "Converstation History: " + "\n".join(self.memory)
+        user_prompt = "User: " + input
+        result_input = history + "\n" + user_prompt
+        model_output = call_model(result_input, self.prompt)
+        result_output = "Assistant: " + model_output
+
+        # Append user prompt and cleaned model output to memory
+        self.memory.append(user_prompt + "\n" +
+                           result_output.replace('\n', ' ').replace('\r', ' '))
+
+        # Make sure to remove "Assistant: "
+        return result_output[11:]
