@@ -54,7 +54,7 @@ def run_cbot(argv):
     # Initialize argv
     sys.argv = argv
 
-    # Model selection flags: -l32 for llama3.2, -ds for deepseek-r1
+    # Model selection flags: -l32 for llama3.2, -ds for deepseek-r1, -oa for openai-o4-mini
     model_name = "llama3.2"
     filtered_argv = [argv[0]]
     for arg in argv[1:]:
@@ -62,7 +62,7 @@ def run_cbot(argv):
             model_name = "llama3.2"
         elif arg == "-ds":
             model_name = "deepseek-r1"
-        elif arg == "-oa4m":
+        elif arg == "-oa":
             model_name = "openai-o4-mini"
         else:
             filtered_argv.append(arg)

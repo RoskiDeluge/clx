@@ -22,14 +22,14 @@ You can choose which Ollama model Cbot uses by passing one of these flags before
   
 - `-l32` : use `llama3.2` (default)  
 - `-ds`  : use `deepseek-r1`
-- `-oa4m`: use `openai o4-mini`
+- `-oa`: use `openai o4-mini`
   
 Example:
   
 ```
 cbot-cli -l32 -g "List files in my home directory"
 cbot-cli -ds -g "Explain how a for loop works in Python"
-cbot-cli -oa4m -g "Who is the president of the United States?"
+cbot-cli -oa -g "Who is the president of the United States?"
 ```
 
 You can also call cbot with a **-s** option. This will save any command as a shortcut with whatever name you choose. The first parameter is the name of the command and the second is the command itself in quotes.
