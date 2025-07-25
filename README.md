@@ -52,6 +52,26 @@ $> cbot-cli -g "What is the meaning of life?"
    42
 ```
 
+## Agent Mode
+
+Cbot includes an agent mode with persistent conversation memory using the **-a** flag. In agent mode, the AI maintains context across multiple interactions, remembering your conversation history even between sessions.
+
+```
+$> cbot-cli -a
+   Entering agent mode. Type 'exit' to end the agent chat.
+   Type 'clear' to clear conversation history.
+You: What's my name?
+Agent: I don't have any information about your name from our conversation.
+
+You: My name is John
+Agent: Nice to meet you, John! I'll remember that.
+
+You: exit
+   Exiting chat mode.
+```
+
+When you restart agent mode later, it will remember previous conversations. Use `clear` to reset the conversation history if needed.
+
 #### Credits
 
 ---

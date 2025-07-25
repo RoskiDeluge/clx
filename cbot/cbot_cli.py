@@ -12,6 +12,60 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+def load_agent_memory():
+    global cache
+    memory_items = cache.execute(
+        "SELECT memory_item FROM agent_memory ORDER BY timestamp ASC"
+    ).fetchall()
+    return [item[0] for item in memory_items]
+
+
+def save_agent_memory_item(memory_item):
+    global cache
+    cache.execute(
+        "INSERT INTO agent_memory (memory_item) VALUES (?)", (memory_item,))
+    cache.commit()
+
+
+def clear_agent_memory():
+    global cache
+    cache.execute("DELETE FROM agent_memory")
+    cache.commit()
+
+
+def initDB():
+    global cache
+    home = expanduser("~")
+    cache = sqlite3.connect(home + "/.cbot_cache")
+    cache.execute("""
+                    CREATE TABLE IF NOT EXISTS questions
+                    (id INTEGER PRIMARY KEY,
+                    question TEXT,
+                    answer TEXT,
+                    count INTEGER DEFAULT 1,
+                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)""")  # Add timestamp column
+
+    # Create conversations table
+    cache.execute("""
+                    CREATE TABLE IF NOT EXISTS conversations
+                    (id INTEGER PRIMARY KEY,
+                    messages TEXT,
+                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)""")
+
+    # Create agent_memory table
+    cache.execute("""
+                    CREATE TABLE IF NOT EXISTS agent_memory
+                    (id INTEGER PRIMARY KEY,
+                    memory_item TEXT,
+                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)""")
+
+
+def closeDB():
+    global cache
+    cache.commit()
+    cache.close()
+
+
 def call_model(prompt, system_message="", model="llama3.2"):
     full_prompt = f"{system_message}\n{prompt}" if system_message else prompt
 
@@ -73,41 +127,30 @@ def run_cbot(argv):
     if "-a" in argv:
         argv.remove("-a")  # Remove the -a flag from argv
 
+        # Initialize database first to load agent memory
+        initDB()
+
+        # Load existing agent memory from database
+        agent_memory = load_agent_memory()
+
         # Prompt to include conversation history to context
         prompt = """You are an AI assistant. When responding to the user's current prompt, consider the full conversation history to maintain context, consistency, and continuity. If no conversation history is available, treat this as a start of a new conversation and do not attempt to reference earlier messages. Prioritize relevance, clarity, and helpfulness in your response."""
-        agent = Agent(
-            [], prompt)
+        agent = Agent(agent_memory, prompt)
         print("Entering agent mode. Type 'exit' to end the agent chat.")
+        print("Type 'clear' to clear conversation history.")
         while True:
             user_input = input("You: ")
             if user_input.lower() == 'exit':
                 print("Exiting chat mode.")
+                closeDB()
                 sys.exit()  # Terminate the program immediately
+            elif user_input.lower() == 'clear':
+                clear_agent_memory()
+                agent.memory = []
+                print("Conversation history cleared.")
+                continue
             response = agent.run(user_input)
             print("Agent:", response, "\n")
-
-    def initDB():
-        global cache
-        cache = sqlite3.connect(home + "/.cbot_cache")
-        cache.execute("""
-                        CREATE TABLE IF NOT EXISTS questions
-                        (id INTEGER PRIMARY KEY,
-                        question TEXT,
-                        answer TEXT,
-                        count INTEGER DEFAULT 1,
-                        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)""")  # Add timestamp column
-
-        # Create conversations table
-        cache.execute("""
-                        CREATE TABLE IF NOT EXISTS conversations
-                        (id INTEGER PRIMARY KEY,
-                        messages TEXT,
-                        timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)""")
-
-    def closeDB():
-        global cache
-        cache.commit()
-        cache.close()
 
     def checkQ(question_text):
         global cache
@@ -321,9 +364,11 @@ class Agent:
         model_output = call_model(result_input, self.prompt)
         result_output = "Assistant: " + model_output
 
-        # Append user prompt and cleaned model output to memory
-        self.memory.append(user_prompt + "\n" +
-                           result_output.replace('\n', ' ').replace('\r', ' '))
+        # Create memory item and save to database
+        memory_item = user_prompt + "\n" + \
+            result_output.replace('\n', ' ').replace('\r', ' ')
+        self.memory.append(memory_item)
+        save_agent_memory_item(memory_item)
 
         # Make sure to remove "Assistant: "
         return result_output[11:]
