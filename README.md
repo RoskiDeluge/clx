@@ -25,6 +25,44 @@ uv add cbot-cli
 
 - NOTE: For the script to work, you will need to have Ollama running in the background. To install a desired Ollama model go to https://ollama.com/search
 
+## Setup Requirements
+
+### For Ollama Models (Default - Recommended for Local Use)
+
+1. **Install Ollama**: Visit [ollama.com](https://ollama.com) and follow the installation instructions for your OS
+2. **Start Ollama**: Ensure Ollama is running in the background
+3. **Pull Required Models**: Run these commands to download the models cbot-cli supports:
+
+```bash
+# Default model (llama3.2)
+ollama pull llama3.2
+
+# Optional: DeepSeek model
+ollama pull deepseek-r1
+```
+
+### For OpenAI API (Cloud-based)
+
+If you prefer to use OpenAI's models instead of local Ollama models:
+
+1. **Get an OpenAI API Key**: Sign up at [platform.openai.com](https://platform.openai.com) and create an API key
+2. **Set Environment Variable**: Add your API key to your environment:
+
+```bash
+# Add to your ~/.zshrc, ~/.bashrc, or ~/.bash_profile
+export OPENAI_API_KEY="your-api-key-here"
+
+# Or create a .env file in your project directory
+echo "OPENAI_API_KEY=your-api-key-here" > ~/.env
+```
+
+3. **Reload your shell** or run:
+```bash
+source ~/.zshrc  # or ~/.bashrc
+```
+
+**Note**: OpenAI API usage incurs costs based on your usage. Check OpenAI's pricing at [openai.com/pricing](https://openai.com/pricing)
+
 
 ## Model Selection
   
