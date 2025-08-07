@@ -82,10 +82,6 @@ You: exit
 
 When you restart agent mode later, it will remember previous conversations. Use `clear` to reset the conversation history if needed.
 
-#### Credits
-
 ---
 
-Forked by Roberto Delgado. \
-Thanks to Gregory Raiz for the original version. \
 This code is free to use under the MIT liscense.
