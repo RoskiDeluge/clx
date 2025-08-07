@@ -4,6 +4,16 @@ The application is a Python script that prompts the Llama/Ollama text completion
 
 ## Installation
 
+## From PyPI (Recommended):
+```bash
+pip install cbot-cli
+```
+
+Or using uv:
+```bash
+uv add cbot-cli
+```
+
 ## For Development: 
 - Clone this repo to your computer using your terminal.
 - `cd ~/<your-directory>/cbot/`
