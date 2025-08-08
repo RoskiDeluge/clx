@@ -123,7 +123,7 @@ def run_cbot(argv):
     argv = filtered_argv
     sys.argv = argv
 
-    # Agent mode disabled until it can be replicated locally via ollama
+    # Custom agent mode implemented without a framework. Add flag to use different agent models: gpt-oss, gpt-5
     if "-a" in argv:
         argv.remove("-a")  # Remove the -a flag from argv
 
@@ -345,7 +345,8 @@ def run_cbot(argv):
     closeDB()
 
 
-# Eventually should be extracted from this current file
+# This is the raw Agent implementation without a framework.
+# TODO: Add multiple agents built with different frameworks: Agents SDK, PydanticAI, etc. for testing
 class Agent:
     def __init__(self, memory, prompt):
         self.memory = memory
