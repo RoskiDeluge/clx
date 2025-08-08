@@ -16,7 +16,7 @@ uv add cbot-cli
 
 ## For Development: 
 - Clone this repo to your computer using your terminal.
-- `cd ~/<your-directory>/cbot/`
+- `cd ~/<your-directory>/cbot-cli/`
 - Run `pip install -e .` inside your cbot directory
 
 - A "cbot-cli" command should be available to use cbot from your CLI, e.g. `cbot-cli -g "Who was the 45th president of the United States?`
