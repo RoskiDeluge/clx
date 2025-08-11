@@ -14,6 +14,18 @@ Or using uv:
 uv add cbot-cli
 ```
 
+For isolated environments, consider using a virtual environment:
+```bash
+python -m venv cbot_env
+source cbot_env/bin/activate  # On Windows: langextract_env\Scripts\activate
+pip install cbot-cli
+```
+
+## From Source
+Cbot-cli uses modern Python packaging with pyproject.toml for dependency management:
+
+Installing with -e puts the package in development mode, allowing you to modify the code without reinstalling.
+
 ## For Development: 
 - Clone this repo to your computer using your terminal.
 - `cd ~/<your-directory>/cbot-cli/`
