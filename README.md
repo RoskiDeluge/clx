@@ -134,4 +134,4 @@ When you restart agent mode later, it will remember previous conversations. Use 
 
 ---
 
-This code is free to use under the MIT liscense.
+This code is free to use under the MIT license.

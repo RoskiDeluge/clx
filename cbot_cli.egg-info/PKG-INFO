@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: cbot-cli
-Version: 0.1.8
+Version: 0.1.9
 Summary: A local-first CLI helper for productivity and automation.
 Author-email: "Roberto L. Delgado" <roberto@delgadodev.xyz>
 License: MIT
@@ -28,9 +28,31 @@ The application is a Python script that prompts the Llama/Ollama text completion
 
 ## Installation
 
+## From PyPI (Recommended):
+```bash
+pip install cbot-cli
+```
+
+Or using uv:
+```bash
+uv add cbot-cli
+```
+
+For isolated environments, consider using a virtual environment:
+```bash
+python -m venv cbot_env
+source cbot_env/bin/activate  # On Windows: langextract_env\Scripts\activate
+pip install cbot-cli
+```
+
+## From Source
+Cbot-cli uses modern Python packaging with pyproject.toml for dependency management:
+
+Installing with -e puts the package in development mode, allowing you to modify the code without reinstalling.
+
 ## For Development: 
 - Clone this repo to your computer using your terminal.
-- `cd ~/<your-directory>/cbot/`
+- `cd ~/<your-directory>/cbot-cli/`
 - Run `pip install -e .` inside your cbot directory
 
 - A "cbot-cli" command should be available to use cbot from your CLI, e.g. `cbot-cli -g "Who was the 45th president of the United States?`
@@ -38,6 +60,44 @@ The application is a Python script that prompts the Llama/Ollama text completion
 - cbot will automatically store questions and responses in a local SQLite database located at `~/.cbot_cache`
 
 - NOTE: For the script to work, you will need to have Ollama running in the background. To install a desired Ollama model go to https://ollama.com/search
+
+## Setup Requirements
+
+### For Ollama Models (Default - Recommended for Local Use)
+
+1. **Install Ollama**: Visit [ollama.com](https://ollama.com) and follow the installation instructions for your OS
+2. **Start Ollama**: Ensure Ollama is running in the background
+3. **Pull Required Models**: Run these commands to download the models cbot-cli supports:
+
+```bash
+# Default model (llama3.2)
+ollama pull llama3.2
+
+# Optional: DeepSeek model
+ollama pull deepseek-r1
+```
+
+### For OpenAI API (Cloud-based)
+
+If you prefer to use OpenAI's models instead of local Ollama models:
+
+1. **Get an OpenAI API Key**: Sign up at [platform.openai.com](https://platform.openai.com) and create an API key
+2. **Set Environment Variable**: Add your API key to your environment:
+
+```bash
+# Add to your ~/.zshrc, ~/.bashrc, or ~/.bash_profile
+export OPENAI_API_KEY="your-api-key-here"
+
+# Or create a .env file in your project directory
+echo "OPENAI_API_KEY=your-api-key-here" > ~/.env
+```
+
+3. **Reload your shell** or run:
+```bash
+source ~/.zshrc  # or ~/.bashrc
+```
+
+**Note**: OpenAI API usage incurs costs based on your usage. Check OpenAI's pricing at [openai.com/pricing](https://openai.com/pricing)
 
 
 ## Model Selection
@@ -96,10 +156,6 @@ You: exit
 
 When you restart agent mode later, it will remember previous conversations. Use `clear` to reset the conversation history if needed.
 
-#### Credits
-
 ---
 
-Forked by Roberto Delgado. \
-Thanks to Gregory Raiz for the original version. \
 This code is free to use under the MIT liscense.
