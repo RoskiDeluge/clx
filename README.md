@@ -17,7 +17,7 @@ uv add cbot-cli
 For isolated environments, consider using a virtual environment:
 ```bash
 python -m venv cbot_env
-source cbot_env/bin/activate  # On Windows: langextract_env\Scripts\activate
+source cbot_env/bin/activate  # On Windows: cbot_env\Scripts\activate
 pip install cbot-cli
 ```
 
