@@ -21,6 +21,13 @@ source cbot_env/bin/activate  # On Windows: langextract_env\Scripts\activate
 pip install cbot-cli
 ```
 
+Or using uv to create and manage a virtual environment:
+```bash
+uv venv cbot_env
+source cbot_env/bin/activate  # On Windows: cbot_env\Scripts\activate
+uv pip install cbot-cli
+```
+
 ## From Source
 Cbot-cli uses modern Python packaging with pyproject.toml for dependency management:
 
