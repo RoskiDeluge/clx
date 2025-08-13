@@ -1,6 +1,6 @@
 ## Cbot-cli Basics
 
-The application is a Python script that prompts the Llama/Ollama text completion endpoint with a system message and can identify the OS of the current system. This helps ensure that Linux, Mac, and Windows specific commands tend to be more accurate.
+Local first, cli chat and agentic application that calls the Llama3.2 (Ollama) text completion endpoint by default with a system message and can identify the OS of the current system. This helps ensure that Linux, Mac, and Windows specific commands tend to be more accurate.
 
 ## Installation
 
