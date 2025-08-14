@@ -75,6 +75,38 @@ export OPENAI_API_KEY="your-api-key-here"
 echo "OPENAI_API_KEY=your-api-key-here" > ~/.env
 ```
 
+#### How to set your OpenAI API key (for non-developers)
+
+**macOS & Linux:**
+1. Open your Terminal app.
+2. Run this command (replace with your actual key):
+   ```bash
+   export OPENAI_API_KEY="your-api-key-here"
+   ```
+3. To make it permanent, add the above line to your shell config file:
+   - For zsh: `echo 'export OPENAI_API_KEY="your-api-key-here"' >> ~/.zshrc`
+   - For bash: `echo 'export OPENAI_API_KEY="your-api-key-here"' >> ~/.bashrc`
+4. Reload your shell:
+   ```bash
+   source ~/.zshrc  # or source ~/.bashrc
+   ```
+
+**Windows:**
+1. Open Command Prompt.
+2. Run:
+   ```cmd
+   setx OPENAI_API_KEY "your-api-key-here"
+   ```
+3. Close and reopen Command Prompt for changes to take effect.
+4. Alternatively, you can set environment variables via System Properties > Environment Variables.
+
+**.env file (all platforms):**
+You can also create a file named `.env` in your project folder and add this line:
+```
+OPENAI_API_KEY=your-api-key-here
+```
+Some tools will automatically read this file.
+
 3. **Reload your shell** or run:
 ```bash
 source ~/.zshrc  # or ~/.bashrc
