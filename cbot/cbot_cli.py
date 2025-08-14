@@ -66,17 +66,17 @@ def closeDB():
     cache.close()
 
 
-def call_model(prompt, system_message="", model="llama3.2"):
+def call_model(prompt, system_message="", model="llama3.2", stream_to_stdout=True):
     full_prompt = f"{system_message}\n{prompt}" if system_message else prompt
 
     if "openai" in model:
         try:
             client = OpenAI()
-
             result = client.responses.create(
                 model="o4-mini",
                 input=full_prompt
             ).output_text
+            return result
         except RateLimitError as e:
             print("Rate Limit Error Ocurred: ", e)
             print(
@@ -85,24 +85,71 @@ def call_model(prompt, system_message="", model="llama3.2"):
         except OpenAIError as e:
             print("Open AI Error Occurred: ", e)
             sys.exit(1)
-
     else:
-        # This is a text completion, not a chat completion. Will need to refactor to the messages array to add context.
+        url = os.environ.get(
+            "OLLAMA_HOST", "http://127.0.0.1:11434").rstrip("/") + "/api/generate"
         payload = {
             "model": model,
             "prompt": full_prompt,
-            "stream": False
+            "stream": True,   # keep streaming from server for fast first token
+            "options": {
+                "num_predict": 256,
+            },
         }
-        # Fully local inference via ollama
-        response = requests.post("http://localhost:11434/api/generate",
-                                 json=payload)
 
-        result = response.json()["response"]
+        proxies = {"http": None, "https": None}
+        headers = {"Accept": "text/event-stream"}
 
-    return result
+        out = []
+        with requests.post(
+            url, json=payload, stream=True, timeout=(5, 1200),
+            proxies=proxies, headers=headers
+        ) as r:
+            r.raise_for_status()
+            for line in r.iter_lines(decode_unicode=True):
+                if not line:
+                    continue
+                if isinstance(line, bytes):
+                    line = line.decode("utf-8", errors="ignore")
+                if line.startswith("data:"):
+                    line = line[5:].strip()
+                if line == "[DONE]":
+                    break
+                try:
+                    chunk = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+
+                token = chunk.get("response", "")
+                if token:
+                    if stream_to_stdout:
+                        sys.stdout.write(token)
+                        sys.stdout.flush()
+                    out.append(token)
+
+                if chunk.get("done"):
+                    break
+
+        return "".join(out)
+
+    # else:
+    #     # This is a text completion, not a chat completion. Will need to refactor to the messages array to add context.
+    #     payload = {
+    #         "model": model,
+    #         "prompt": full_prompt,
+    #         "stream": False
+    #     }
+    #     # Fully local inference via ollama
+    #     response = requests.post("http://localhost:11434/api/generate",
+    #                              json=payload)
+
+    #     result = response.json()["response"]
+
+    # return result
 
 
 def run_cbot(argv):
+    already_streamed = False
 
     global sys
     # Initialize argv
@@ -313,7 +360,9 @@ def run_cbot(argv):
         #                                           frequency_penalty=0,
         #                                           presence_penalty=0)
         # result = response.choices[0].message.content
+        stream_live = True  # set to False if you want quiet mode
         result = call_model(temp_question, system_message, model_name)
+        already_streamed = stream_live
         insertQ(question, result)
     elif question_mode == "history":
         print("CHAT HISTORY (last 10 messages):")
@@ -340,7 +389,10 @@ def run_cbot(argv):
             result = os.system(result)
     else:
         if not (question_mode == "shortcut"):
-            print(result)
+            if already_streamed:
+                sys.stdout.write("\n")
+            else:
+                print(result)
 
     closeDB()
 
