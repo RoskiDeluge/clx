@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: cbot-cli
-Version: 0.2.0
+Version: 0.2.1
 Summary: A local-first CLI helper for productivity and automation.
 Author-email: "Roberto L. Delgado" <roberto@delgadodev.xyz>
 License: MIT
@@ -18,13 +18,13 @@ Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: requests
 Requires-Dist: pyperclip
-Requires-Dist: openai
+Requires-Dist: openai<2.0.0,>=1.46.0
 Requires-Dist: python-dotenv
 Dynamic: license-file
 
 ## Cbot-cli Basics
 
-The application is a Python script that prompts the Llama/Ollama text completion endpoint with a system message and can identify the OS of the current system. This helps ensure that Linux, Mac, and Windows specific commands tend to be more accurate.
+Local first, cli chat and agentic application that calls the Llama3.2 (Ollama) text completion endpoint by default with a system message and can identify the OS of the current system. This helps ensure that Linux, Mac, and Windows specific commands tend to be more accurate.
 
 ## Installation
 
@@ -41,8 +41,15 @@ uv add cbot-cli
 For isolated environments, consider using a virtual environment:
 ```bash
 python -m venv cbot_env
-source cbot_env/bin/activate  # On Windows: langextract_env\Scripts\activate
+source cbot_env/bin/activate  # On Windows: cbot_env\Scripts\activate
 pip install cbot-cli
+```
+
+Or using uv to create and manage a virtual environment:
+```bash
+uv venv cbot_env
+source cbot_env/bin/activate  # On Windows: cbot_env\Scripts\activate
+uv pip install cbot-cli
 ```
 
 ## From Source
@@ -91,6 +98,38 @@ export OPENAI_API_KEY="your-api-key-here"
 # Or create a .env file in your project directory
 echo "OPENAI_API_KEY=your-api-key-here" > ~/.env
 ```
+
+#### How to set your OpenAI API key (for non-developers)
+
+**macOS & Linux:**
+1. Open your Terminal app.
+2. Run this command (replace with your actual key):
+   ```bash
+   export OPENAI_API_KEY="your-api-key-here"
+   ```
+3. To make it permanent, add the above line to your shell config file:
+   - For zsh: `echo 'export OPENAI_API_KEY="your-api-key-here"' >> ~/.zshrc`
+   - For bash: `echo 'export OPENAI_API_KEY="your-api-key-here"' >> ~/.bashrc`
+4. Reload your shell:
+   ```bash
+   source ~/.zshrc  # or source ~/.bashrc
+   ```
+
+**Windows:**
+1. Open Command Prompt.
+2. Run:
+   ```cmd
+   setx OPENAI_API_KEY "your-api-key-here"
+   ```
+3. Close and reopen Command Prompt for changes to take effect.
+4. Alternatively, you can set environment variables via System Properties > Environment Variables.
+
+**.env file (all platforms):**
+You can also create a file named `.env` in your project folder and add this line:
+```
+OPENAI_API_KEY=your-api-key-here
+```
+Some tools will automatically read this file.
 
 3. **Reload your shell** or run:
 ```bash
