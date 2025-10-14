@@ -40,7 +40,7 @@ Installing with -e puts the package in development mode, allowing you to modify 
 
 - A "cbot-cli" command should be available to use cbot from your CLI, e.g. `cbot-cli -g "Who was the 45th president of the United States?`
 
-- cbot will automatically store questions and responses in a local SQLite database located at `~/.cbot_cache`
+- cbot will automatically store questions, responses and agent memory in a local SQLite database located at `~/.cbot_cache`
 
 - NOTE: For the script to work, you will need to have Ollama running in the background. To install a desired Ollama model go to https://ollama.com/search
 
@@ -121,6 +121,8 @@ You can choose which Ollama model Cbot uses by passing one of these flags before
   
 - `-l32` : use `llama3.2` (default)  
 - `-ds`  : use `deepseek-r1`
+
+To use OpenAI models: 
 - `-oa`: use `openai o4-mini`
   
 Example:

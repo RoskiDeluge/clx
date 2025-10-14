@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Handlers for local agent memory --
+
 
 def load_agent_memory():
     global cache
@@ -31,6 +33,7 @@ def clear_agent_memory():
     global cache
     cache.execute("DELETE FROM agent_memory")
     cache.commit()
+# local agent memory --
 
 
 def initDB():
@@ -399,7 +402,7 @@ def run_cbot(argv):
 
 class Agent:
     # This is a raw Agent implementation.
-    # TODO: Add multiple agents built with different frameworks: Agents SDK, PydanticAI, etc. for testing
+    # TODO: Add multiple agents built with different frameworks: Agents SDK, PydanticAI, Langchain, etc. for testing
     def __init__(self, memory, prompt):
         self.memory = memory
         self.prompt = prompt
