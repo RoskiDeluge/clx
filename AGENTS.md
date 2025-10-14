@@ -10,7 +10,7 @@ This document provides a comprehensive guide for AI code assistants (including G
 
 
 
-`cbot-cli` is a command-line interface (CLI) tool written in Python that allows users to interact with various large language models (LLMs). It supports local models via Ollama (e.g., Llama 3.2, DeepSeek) and cloud-based models via the OpenAI API.`cbot-cli` is a command-line interface (CLI) tool written in Python that allows users to interact with various large language models (LLMs). It supports local models via Ollama (e.g., Llama 3.2, DeepSeek) and cloud-based models via the OpenAI API.
+`cbot-cli` is a command-line interface (CLI) tool written in Python that allows users to interact with various large language models (LLMs). It supports local models via Ollama (e.g., Llama 3.2) and cloud-based models via the OpenAI API.
 
 
 

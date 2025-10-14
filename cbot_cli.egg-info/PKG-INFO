@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: cbot-cli
-Version: 0.2.2
+Version: 0.3.0
 Summary: A local-first CLI helper for productivity and automation.
 Author-email: "Roberto L. Delgado" <roberto@delgadodev.xyz>
 License: MIT
@@ -64,7 +64,7 @@ Installing with -e puts the package in development mode, allowing you to modify 
 
 - A "cbot-cli" command should be available to use cbot from your CLI, e.g. `cbot-cli -g "Who was the 45th president of the United States?`
 
-- cbot will automatically store questions and responses in a local SQLite database located at `~/.cbot_cache`
+- cbot will automatically store questions, responses and agent memory in a local SQLite database located at `~/.cbot_cache`
 
 - NOTE: For the script to work, you will need to have Ollama running in the background. To install a desired Ollama model go to https://ollama.com/search
 
@@ -79,9 +79,6 @@ Installing with -e puts the package in development mode, allowing you to modify 
 ```bash
 # Default model (llama3.2)
 ollama pull llama3.2
-
-# Optional: DeepSeek model
-ollama pull deepseek-r1
 ```
 
 ### For OpenAI API (Cloud-based)
@@ -144,14 +141,14 @@ source ~/.zshrc  # or ~/.bashrc
 You can choose which Ollama model Cbot uses by passing one of these flags before your question:
   
 - `-l32` : use `llama3.2` (default)  
-- `-ds`  : use `deepseek-r1`
+
+To use OpenAI models: 
 - `-oa`: use `openai o4-mini`
   
 Example:
   
 ```
 cbot-cli -l32 -g "List files in my home directory"
-cbot-cli -ds -g "Explain how a for loop works in Python"
 cbot-cli -oa -g "Who is the president of the United States?"
 ```
 

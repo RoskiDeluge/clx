@@ -10,7 +10,7 @@ This document provides comprehensive guidance for AI assistants (Claude, GPT-4, 
 
 - **Python-based CLI tool** distributed via PyPI
 - **Local-first architecture** with SQLite caching
-- **Multi-model support**: Ollama (Llama 3.2, DeepSeek) and OpenAI API
+- **Multi-model support**: Ollama (Llama 3.2) and OpenAI API
 - **Persistent memory** for conversational context
 - **Simple, lightweight design** with minimal dependencies
 
@@ -93,7 +93,6 @@ Location: `~/.cbot_cache` (SQLite3)
 Must appear BEFORE the question/command:
 
 - `-l32` - Use Llama 3.2 (default)
-- `-ds` - Use DeepSeek-R1
 - `-oa` - Use OpenAI o4-mini
 
 ### Operation Modes
@@ -210,7 +209,6 @@ cbot-cli -m  # View history
 
 # Test model switching
 cbot-cli -l32 -g "Hello"
-cbot-cli -ds -g "Hello"
 cbot-cli -oa -g "Hello"  # Requires OPENAI_API_KEY
 
 # Test execution modes

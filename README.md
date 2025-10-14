@@ -55,9 +55,6 @@ Installing with -e puts the package in development mode, allowing you to modify 
 ```bash
 # Default model (llama3.2)
 ollama pull llama3.2
-
-# Optional: DeepSeek model
-ollama pull deepseek-r1
 ```
 
 ### For OpenAI API (Cloud-based)
@@ -120,7 +117,6 @@ source ~/.zshrc  # or ~/.bashrc
 You can choose which Ollama model Cbot uses by passing one of these flags before your question:
   
 - `-l32` : use `llama3.2` (default)  
-- `-ds`  : use `deepseek-r1`
 
 To use OpenAI models: 
 - `-oa`: use `openai o4-mini`
@@ -129,7 +125,6 @@ Example:
   
 ```
 cbot-cli -l32 -g "List files in my home directory"
-cbot-cli -ds -g "Explain how a for loop works in Python"
 cbot-cli -oa -g "Who is the president of the United States?"
 ```
 

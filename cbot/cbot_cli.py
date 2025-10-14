@@ -158,16 +158,22 @@ def run_cbot(argv):
     # Initialize argv
     sys.argv = argv
 
-    # Model selection flags: -l32 for llama3.2, -ds for deepseek-r1, -oa for openai-o4-mini
+    # Model selection flags: -l32 for llama3.2, -oa for openai-o4-mini
     model_name = "llama3.2"
     filtered_argv = [argv[0]]
+
+    # Valid flags that should be recognized
+    valid_flags = {"-l32", "-oa", "-a", "-x", "-c", "-g", "-m", "-s", "-h"}
+
     for arg in argv[1:]:
         if arg == "-l32":
             model_name = "llama3.2"
-        elif arg == "-ds":
-            model_name = "deepseek-r1"
         elif arg == "-oa":
             model_name = "openai-o4-mini"
+        elif arg.startswith("-") and arg not in valid_flags:
+            print(f"Error: Unknown flag '{arg}'")
+            print("Valid flags: -l32, -oa, -a, -x, -c, -g, -m, -s, -h")
+            sys.exit(1)
         else:
             filtered_argv.append(arg)
     argv = filtered_argv
