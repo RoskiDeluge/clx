@@ -339,7 +339,7 @@ def run_cbot(argv):
         cache_answer = False
         cache_answer = checkQ(question)
 
-    response = ""
+    # response = ""
     if not (cache_answer) and ((question_mode == "general") or (question_mode == "normal")):
         temp_question = question
         if not ("?" in question):
@@ -352,7 +352,7 @@ def run_cbot(argv):
         else:  # question_mode is "normal"
             system_message = f"You are a command line translation tool for {platform}. You will provide a concise answer to the user's question with the correct command."
 
-        # This code use to handle passing the context to cbot via the chat messages array
+        # This legacy code was used to handle passing the context to cbot via the chat messages array
         # Fetch previous prompts from the cache
         previous_prompts = fetch_previous_prompts()
 
