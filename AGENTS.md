@@ -1,8 +1,6 @@
-# AI Code Assistant Guide# AI Code Assistant Guide
+# AI Code Assistant Guide
 
-
-
-This document provides a comprehensive guide for AI code assistants (including Gemini, GPT-4, Claude, and others) to effectively understand and contribute to the `cbot-cli` project.This document provides a comprehensive guide for AI code assistants (including Gemini, GPT-4, Claude, and others) to effectively understand and contribute to the `cbot-cli` project.
+This document provides a comprehensive guide for AI code assistants (including Gemini, GPT-4, Claude, and others) to effectively understand and contribute to the `clx-cli` project.
 
 
 
@@ -10,7 +8,7 @@ This document provides a comprehensive guide for AI code assistants (including G
 
 
 
-`cbot-cli` is a command-line interface (CLI) tool written in Python that allows users to interact with various large language models (LLMs). It supports local models via Ollama (e.g., Llama 3.2) and cloud-based models via the OpenAI API.
+`clx-cli` is a command-line interface (CLI) tool written in Python that allows users to interact with various large language models (LLMs). It supports local models via Ollama (e.g., Llama 3.2) and cloud-based models via the OpenAI API.
 
 
 
@@ -52,21 +50,13 @@ The key features include:The key features include:
 
 ## Project Structure## Project Structure
 
-
-
--   `cbot/`: Main source code directory.-   `cbot/`: Main source code directory.
-
-    -   `cbot_cli.py`: Core application logic, including argument parsing, API interaction, and database management.    -   `cbot_cli.py`: Core application logic, including argument parsing, API interaction, and database management.
-
-    -   `__main__.py`: Entry point for running the CLI, which calls the main function in `cbot_cli.py`.    -   `__main__.py`: Entry point for running the CLI, which calls the main function in `cbot_cli.py`.
-
--   `pyproject.toml`: Defines project metadata, dependencies, and the `cbot-cli` script entry point.-   `pyproject.toml`: Defines project metadata, dependencies, and the `cbot-cli` script entry point.
-
--   `requirements.txt`: Lists Python dependencies.-   `requirements.txt`: Lists Python dependencies.
-
--   `README.md`: User-facing documentation.-   `README.md`: User-facing documentation.
-
--   `~/.cbot_cache`: Location of the SQLite database for caching.-   `~/.cbot_cache`: Location of the SQLite database for caching.
+-   `clx/`: Main source code directory.
+    -   `clx_cli.py`: Core application logic, including argument parsing, API interaction, and database management.
+    -   `__main__.py`: Entry point for running the CLI, which calls the main function in `clx_cli.py`.
+-   `pyproject.toml`: Defines project metadata, dependencies, and the `clx-cli` script entry point.
+-   `requirements.txt`: Lists Python dependencies.
+-   `README.md`: User-facing documentation.
+-   `~/.clx_cache`: Location of the SQLite database for caching.
 
 
 
@@ -88,71 +78,48 @@ The key features include:The key features include:
 
     ```    ```
 
-    This makes the `cbot-cli` command available in the shell and reflects code changes immediately.    This makes the `cbot-cli` command available in the shell and reflects code changes immediately.
+    This makes the `clx-cli` command available in the shell and reflects code changes immediately.
 
 
 
-### Running the CLI### Running the CLI
+### Running the CLI
+
+The primary entry point is the `clx-cli` command.
+
+**Examples:**
+
+-   Ask a general question with the default model:
+    ```bash
+    clx-cli -g "What is the capital of France?"
+    ```
+
+-   Get a shell command and execute it:
+    ```bash
+    clx-cli "list all files in the current directory"
+    ```
+
+-   Use a specific model (e.g., OpenAI):
+    ```bash
+    clx-cli -oa -g "Explain the theory of relativity"
+    ```
+
+-   Save a command shortcut:
+    ```bash
+    clx-cli -s list_py "ls *.py"
+    ```
+
+-   Execute a saved shortcut:
+    ```bash
+    clx-cli -x list_py
+    ```
 
 
 
-The primary entry point is the `cbot-cli` command.The primary entry point is the `cbot-cli` command.
+### Modifying Code
 
-
-
-**Examples:****Examples:**
-
--   Ask a general question with the default model:-   Ask a general question with the default model:
-
-    ```bash    ```bash
-
-    cbot-cli -g "What is the capital of France?"    cbot-cli -g "What is the capital of France?"
-
-    ```    ```
-
--   Get a shell command and execute it:-   Get a shell command and execute it:
-
-    ```bash    ```bash
-
-    cbot-cli "list all files in the current directory"    cbot-cli "list all files in the current directory"
-
-    ```    ```
-
--   Use a specific model (e.g., OpenAI):-   Use a specific model (e.g., OpenAI):
-
-    ```bash    ```bash
-
-    cbot-cli -oa -g "Explain the theory of relativity"    cbot-cli -oa -g "Explain the theory of relativity"
-
-    ```    ```
-
--   Save a command shortcut:-   Save a command shortcut:
-
-    ```bash    ```bash
-
-    cbot-cli -s list_py "ls *.py"    cbot-cli -s list_py "ls *.py"
-
-    ```    ```
-
--   Execute a saved shortcut:-   Execute a saved shortcut:
-
-    ```bash    ```bash
-
-    cbot-cli -x list_py    cbot-cli -x list_py
-
-    ```    ```
-
-
-
-### Modifying Code### Modifying Code
-
-
-
--   The main logic is in `cbot/cbot_cli.py`.-   The main logic is in `cbot/cbot_cli.py`.
-
--   The `main()` function in this file is the primary entry point that orchestrates the application's behavior based on the parsed arguments.-   The `main()` function in this file is the primary entry point that orchestrates the application's behavior based on the parsed arguments.
-
--   Dependencies are managed in `pyproject.toml` and mirrored in `requirements.txt`.-   Dependencies are managed in `pyproject.toml` and mirrored in `requirements.txt`.
+-   The main logic is in `clx/clx_cli.py`.
+-   The `main()` function in this file is the primary entry point that orchestrates the application's behavior based on the parsed arguments.
+-   Dependencies are managed in `pyproject.toml` and mirrored in `requirements.txt`.
 
 
 

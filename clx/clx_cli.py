@@ -39,7 +39,7 @@ def clear_agent_memory():
 def initDB():
     global cache
     home = expanduser("~")
-    cache = sqlite3.connect(home + "/.cbot_cache")
+    cache = sqlite3.connect(home + "/.clx_cache")
     cache.execute("""
                     CREATE TABLE IF NOT EXISTS questions
                     (id INTEGER PRIMARY KEY,
@@ -151,7 +151,7 @@ def call_model(prompt, system_message="", model="llama3.2", stream_to_stdout=Tru
     # return result
 
 
-def run_cbot(argv):
+def run_clx(argv):
     already_streamed = False
 
     global sys
@@ -238,9 +238,9 @@ def run_cbot(argv):
 
     def fetchQ(argv):
         question = ""
-        # [cbot,-x,  What,is,the,date]  # execute the response
-        # [cbot,What,is, the,date]      # no quotes will work
-        # [cbot,What is the date]       # with quotes will work
+        # [clx,-x,  What,is,the,date]  # execute the response
+        # [clx,What,is, the,date]      # no quotes will work
+        # [clx,What is the date]       # with quotes will work
         for a in range(1, len(argv)):
             question = question + " " + argv[a]
         question = question.strip()
@@ -259,16 +259,16 @@ def run_cbot(argv):
         clip = False
         agent_mode = False
         if ("-h" in question) or (question == " "):  # Return basic help info
-            print("Cbot is a simple utility powered by AI (Ollama)")
+            print("CLX is a simple utility powered by AI (Ollama)")
             print("""
             Example usage:
-            cbot how do I copy files to my home directory
-            cbot "How do I put my computer to sleep
-            cbot -c "how do I install homebrew?"      (copies the result to clipboard)
-            cbot -x what is the date                  (executes the result)
-            cbot -g who was the 22nd president        (runs in general question mode)
-            cbot -m                                   (prints the converstaion history)
-            cbot -a                                   (runs in agent mode)
+            clx how do I copy files to my home directory
+            clx "How do I put my computer to sleep
+            clx -c "how do I install homebrew?"      (copies the result to clipboard)
+            clx -x what is the date                  (executes the result)
+            clx -g who was the 22nd president        (runs in general question mode)
+            clx -m                                   (prints the converstaion history)
+            clx -a                                   (runs in agent mode)
             """)
             exit()
 
@@ -352,7 +352,7 @@ def run_cbot(argv):
         else:  # question_mode is "normal"
             system_message = f"You are a command line translation tool for {platform}. You will provide a concise answer to the user's question with the correct command."
 
-        # This legacy code was used to handle passing the context to cbot via the chat messages array
+        # This legacy code was used to handle passing the context to clx via the chat messages array
         # Fetch previous prompts from the cache
         previous_prompts = fetch_previous_prompts()
 
@@ -391,9 +391,9 @@ def run_cbot(argv):
     if clip:
         pyperclip.copy(result)
     if execute:
-        print("cbot executing: " + result)
+        print("clx executing: " + result)
         if ("sudo" in result):
-            print("Execution canceled, cbot will not execute sudo commands.")
+            print("Execution canceled, clx will not execute sudo commands.")
         else:
             result = os.system(result)
     else:

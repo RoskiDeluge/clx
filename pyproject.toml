@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "cbot-cli"
-version = "0.3.0"
+name = "clx-cli"
+version = "0.4.0"
 description = "A local-first CLI helper for productivity and automation."
 readme = "README.md"
 requires-python = ">=3.7"
@@ -28,10 +28,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/roskideluge/cbot"
-Repository = "https://github.com/roskideluge/cbot"
-Issues = "https://github.com/roskideluge/cbot/issues"
+Homepage = "https://github.com/roskideluge/clx"
+Repository = "https://github.com/roskideluge/clx"
+Issues = "https://github.com/roskideluge/clx/issues"
 
 [project.scripts]
-cbot = "cbot.__main__:main"
-cbot-cli = "cbot.__main__:main"
+clx = "clx.__main__:main"
+clx-cli = "clx.__main__:main"

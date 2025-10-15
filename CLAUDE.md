@@ -1,10 +1,10 @@
-# CLAUDE.md - AI Assistant Guide for cbot-cli
+# CLAUDE.md - AI Assistant Guide for clx-cli
 
-This document provides comprehensive guidance for AI assistants (Claude, GPT-4, Gemini, etc.) working with the cbot-cli project.
+This document provides comprehensive guidance for AI assistants (Claude, GPT-4, Gemini, etc.) working with the clx-cli project.
 
 ## Project Overview
 
-**cbot-cli** is a local-first command-line interface tool that enables natural language interaction with large language models (LLMs) for productivity and automation tasks. The tool is designed to help users generate shell commands, ask general questions, and maintain conversational context through an agent mode.
+**clx-cli** is a local-first command-line interface tool that enables natural language interaction with large language models (LLMs) for productivity and automation tasks. The tool is designed to help users generate shell commands, ask general questions, and maintain conversational context through an agent mode.
 
 ### Key Characteristics
 
@@ -19,11 +19,11 @@ This document provides comprehensive guidance for AI assistants (Claude, GPT-4, 
 ### Project Structure
 
 ```
-cbot-cli/
-├── cbot/
+clx-cli/
+├── clx/
 │   ├── __init__.py          # Package initialization
-│   ├── __main__.py          # Entry point (calls run_cbot)
-│   └── cbot_cli.py          # Core application logic (~430 lines)
+│   ├── __main__.py          # Entry point (calls run_clx)
+│   └── clx_cli.py           # Core application logic (~430 lines)
 ├── pyproject.toml           # Modern Python packaging configuration
 ├── setup.py                 # Legacy setup file
 ├── requirements.txt         # Dependency list
@@ -34,11 +34,11 @@ cbot-cli/
 
 ### Core Components
 
-#### 1. Entry Point (`cbot/__main__.py`)
-- Simple wrapper that calls `run_cbot(sys.argv)`
-- Two CLI commands registered: `cbot` and `cbot-cli`
+#### 1. Entry Point (`clx/__main__.py`)
+- Simple wrapper that calls `run_clx(sys.argv)`
+- Two CLI commands registered: `clx` and `clx-cli`
 
-#### 2. Main Application (`cbot/cbot_cli.py`)
+#### 2. Main Application (`clx/clx_cli.py`)
 
 **Key Functions:**
 
@@ -47,7 +47,7 @@ cbot-cli/
   - Supports streaming output for real-time responses
   - Uses OLLAMA_HOST environment variable (default: http://127.0.0.1:11434)
 
-- `run_cbot(argv)` (line 154)
+- `run_clx(argv)` (line 154)
   - Main orchestration function
   - Handles argument parsing and mode selection
   - Manages model selection via flags
@@ -65,7 +65,7 @@ cbot-cli/
 
 ### Database Schema
 
-Location: `~/.cbot_cache` (SQLite3)
+Location: `~/.clx_cache` (SQLite3)
 
 **Tables:**
 
@@ -100,27 +100,27 @@ Must appear BEFORE the question/command:
 1. **Normal Mode** (default)
    - Generates shell commands for the detected OS
    - System message: "You are a command line translation tool for {platform}..."
-   - Example: `cbot-cli "list all python files"`
+   - Example: `clx-cli "list all python files"`
 
 2. **General Question Mode** (`-g`)
    - Generic question answering
    - System message: "You are a helpful assistant..."
-   - Example: `cbot-cli -g "Who was the 45th president?"`
+   - Example: `clx-cli -g "Who was the 45th president?"`
 
 3. **Agent Mode** (`-a`)
    - Persistent conversational interface
    - Maintains memory across sessions
    - Commands: `exit` to quit, `clear` to reset memory
-   - Example: `cbot-cli -a`
+   - Example: `clx-cli -a`
 
 4. **Shortcut Mode** (`-s`)
    - Save commands with aliases
-   - Format: `cbot-cli -s <name> "<command>"`
-   - Example: `cbot-cli -s nap "pmset sleepnow"`
+   - Format: `clx-cli -s <name> "<command>"`
+   - Example: `clx-cli -s nap "pmset sleepnow"`
 
 5. **History Mode** (`-m`)
    - Display last 10 conversation messages
-   - Example: `cbot-cli -m`
+   - Example: `clx-cli -m`
 
 ### Execution Flags
 
@@ -202,18 +202,18 @@ For OpenAI (line 76-90):
 pip install -e .
 
 # Test different modes
-cbot-cli -g "What is 2+2?"
-cbot-cli "list files"
-cbot-cli -a  # Test agent mode
-cbot-cli -m  # View history
+clx-cli -g "What is 2+2?"
+clx-cli "list files"
+clx-cli -a  # Test agent mode
+clx-cli -m  # View history
 
 # Test model switching
-cbot-cli -l32 -g "Hello"
-cbot-cli -oa -g "Hello"  # Requires OPENAI_API_KEY
+clx-cli -l32 -g "Hello"
+clx-cli -oa -g "Hello"  # Requires OPENAI_API_KEY
 
 # Test execution modes
-cbot-cli -c "get current directory"  # Copies to clipboard
-cbot-cli -x "print hello world"      # Executes (be careful!)
+clx-cli -c "get current directory"  # Copies to clipboard
+clx-cli -x "print hello world"      # Executes (be careful!)
 ```
 
 ### Common Tasks
@@ -263,8 +263,8 @@ cbot-cli -x "print hello world"      # Executes (be careful!)
 
 ## Useful References
 
-- Repository: https://github.com/roskideluge/cbot
-- PyPI: https://pypi.org/project/cbot-cli/
+- Repository: https://github.com/roskideluge/clx
+- PyPI: https://pypi.org/project/clx-cli/
 - Ollama Models: https://ollama.com/search
 - OpenAI API: https://platform.openai.com
 
@@ -272,10 +272,10 @@ cbot-cli -x "print hello world"      # Executes (be careful!)
 
 When working on the codebase, focus on:
 
-1. `cbot/cbot_cli.py` - All core logic
+1. `clx/clx_cli.py` - All core logic
 2. `pyproject.toml` - Dependencies and metadata
 3. `README.md` - User-facing documentation
-4. `~/.cbot_cache` - Database location (created at runtime)
+4. `~/.clx_cache` - Database location (created at runtime)
 
 ## Quick Tips for AI Assistants
 

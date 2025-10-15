@@ -1,9 +1,9 @@
 import sys
-from .cbot_cli import run_cbot
+from .clx_cli import run_clx
 
 
 def main():
-    run_cbot(sys.argv)
+    run_clx(sys.argv)
 
 
 if __name__ == "__main__":
