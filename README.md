@@ -38,7 +38,7 @@ Installing with -e puts the package in development mode, allowing you to modify 
 - `cd ~/<your-directory>/clx-cli/`
 - Run `pip install -e .` inside your clx directory
 
-- A "clx-cli" command should be available to use clx from your CLI, e.g. `clx-cli -g "Who was the 45th president of the United States?`
+- A "clx" command should be available to use clx from your CLI, e.g. `clx -g "Who was the 45th president of the United States?`
 
 - clx will automatically store questions, responses and agent memory in a local SQLite database located at `~/.clx_cache`
 
@@ -124,16 +124,16 @@ To use OpenAI models:
 Example:
   
 ```
-clx-cli -l32 -g "List files in my home directory"
-clx-cli -oa -g "Who is the president of the United States?"
+clx -l32 -g "List files in my home directory"
+clx -oa -g "Who is the president of the United States?"
 ```
 
 You can also call clx with a **-s** option. This will save any command as a shortcut with whatever name you choose. The first parameter is the name of the command and the second is the command itself in quotes.
 
 ```
-$> clx-cli -s nap "pmset sleepnow"
+$> clx -s nap "pmset sleepnow"
    Saving shortcut nap, will return: pmset sleepnow
-$> clx-cli -x nap
+$> clx -x nap
    Sleeping now...
 ```
 
@@ -142,9 +142,9 @@ To copy a command directly into the clipboard use the **-c** option. Can be usef
 CLX has a -g option to ask general questions. The results when you ask a general question will not be formated as a command line. This is useful for asking general questions, historical facts or other information not likely to be formated as a command.
 
 ```
-$> clx-cli -g "Who was the 23rd president?"
+$> clx -g "Who was the 23rd president?"
   Herbert Hoover
-$> clx-cli -g "What is the meaning of life?"
+$> clx -g "What is the meaning of life?"
    42
 ```
 
@@ -153,7 +153,7 @@ $> clx-cli -g "What is the meaning of life?"
 CLX includes an agent mode with persistent conversation memory using the **-a** flag. In agent mode, the AI maintains context across multiple interactions, remembering your conversation history even between sessions.
 
 ```
-$> clx-cli -a
+$> clx -a
    Entering agent mode. Type 'exit' to end the agent chat.
    Type 'clear' to clear conversation history.
 You: What's my name?
