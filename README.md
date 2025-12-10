@@ -80,6 +80,7 @@ clx is optimized to work cleanly with the Paseo backend contract:
 - Uses `use_messages_payload=True` to send `{"messages": [{"role":"user","content": prompt}], "metadata": {...}}` which matches Paseo’s expected shape.
 - Accepts `response` or `output` fields so Paseo responses map directly to return values.
 - Environment-friendly defaults: set `CLX_BACKEND_URL`, `CLX_POD_NAME`, `CLX_ACTOR_ID`, and `CLX_MODEL` (e.g., `@cf/meta/llama-3.1-8b-instruct`) in `.env` and invoke `clx_query` or `demo_backend_call.py`.
+- Paseo repo: https://github.com/RoskiDeluge/paseo
 
 ## Task helpers
 All helpers forward to `clx_query` with light prompt templates:
