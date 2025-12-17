@@ -31,8 +31,8 @@ Response:
 { "output": ... }  # string or JSON-serializable
 ```
 
-### Pod/actor worker-style backend
-If your backend uses the `pods/{podName}/actors/{actorId}/run` route (see example below), set `CLX_POD_NAME` and `CLX_ACTOR_ID` (or pass `pod_name`/`actor_id` to `clx_query`). Payload will be sent as `{"messages": [{"role":"user","content": prompt}], "metadata": {...}}` when `use_messages_payload=True`.
+### Pod/actor worker-style backend (Paseo)
+If your backend is deployed on Paseo and uses the `pods/{podName}/actors/{actorId}/run` route (see example below), set `CLX_POD_NAME` and `CLX_ACTOR_ID` (or pass `pod_name`/`actor_id` to `clx_query`). This connects directly to a Paseo actor running on Cloudflare’s infrastructure. Payload will be sent as `{"messages": [{"role":"user","content": prompt}], "metadata": {...}}` when `use_messages_payload=True`.
 
 Example endpoint: `https://your-worker.workers.dev/pods/{podName}/actors/{actorId}/run`
 
@@ -75,7 +75,7 @@ print(result)  # e.g., "2+2 equals 4."
 ```
 
 ## Paseo backend optimization
-clx is optimized to work cleanly with the Paseo backend contract:
+clx is optimized to work cleanly with the Paseo backend contract—the actor ecosystem that powers full observability and evals for clx, not just a router for LLM calls:
 - Supports pod/actor routes at `https://<paseo-worker>/pods/{podName}/actors/{actorId}/run`.
 - Uses `use_messages_payload=True` to send `{"messages": [{"role":"user","content": prompt}], "metadata": {...}}` which matches Paseo’s expected shape.
 - Accepts `response` or `output` fields so Paseo responses map directly to return values.
