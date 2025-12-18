@@ -75,7 +75,7 @@ print(result)  # e.g., "2+2 equals 4."
 ```
 
 ## Paseo backend optimization
-clx is optimized to work cleanly with a Paseo backend (https://github.com/RoskiDeluge/paseo) that enhances clx by providing an actor ecosystem with extended functionality for observing, tracing, and evaluating request/response data:
+clx is optimized to work cleanly with a Paseo backend. Paseo enhances clx by providing a low latency, Cloudflare based actor ecosystem with extended functionality for observing, tracing, and evaluating request/response data:
 - Supports pod/actor routes at `https://<paseo-worker>/pods/{podName}/actors/{actorId}/run`.
 - Uses `use_messages_payload=True` to send `{"messages": [{"role":"user","content": prompt}], "metadata": {...}}` which matches Paseo’s expected shape.
 - Accepts `response` or `output` fields so Paseo responses map directly to return values.
