@@ -47,6 +47,6 @@ Minimal Python library for forwarding LLM-style prompts to a user-supplied HTTP 
 - Local caching is optional and must remain opt-in; defaults should not create files unless cache is used
 
 ## External Dependencies
-- User-supplied HTTP backend at `/v1/query` or `/pods/{pod}/actors/{actor}/run` (e.g., Paseo worker)
+- User-supplied HTTP backend at `/v1/query` or `/pods/{pod}/actors/{actor}/run`
 - Local SQLite file for caching (`~/.clx_cache.db`) when enabled
 - Optional ecosystems: Spark (pyspark) and DuckDB for SQL adapters; SQLite built-in

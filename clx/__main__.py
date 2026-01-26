@@ -9,8 +9,8 @@ from . import clx_query
 
 def main() -> None:
     message = (
-        "clx is now a minimal AI resolver library. "
-        "Import and call `clx.clx_query` instead of using the CLI."
+        "clx is a minimal AI resolver library. "
+        "Import and call `clx.clx_query`"
     )
     try:
         # Tiny sanity check to ensure the import worked.

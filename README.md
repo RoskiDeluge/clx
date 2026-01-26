@@ -31,8 +31,8 @@ Response:
 { "output": ... }  # string or JSON-serializable
 ```
 
-### Pod/actor worker-style backend (Paseo)
-If your backend is deployed on Paseo and uses the `pods/{podName}/actors/{actorId}/run` route (see example below), set `CLX_POD_NAME` and `CLX_ACTOR_ID` (or pass `pod_name`/`actor_id` to `clx_query`). This connects directly to a Paseo actor running on Cloudflare’s infrastructure. Payload will be sent as `{"messages": [{"role":"user","content": prompt}], "metadata": {...}}` when `use_messages_payload=True`.
+### Pod/actor worker-style backend (optional)
+If your backend exposes a `pods/{podName}/actors/{actorId}/run` route (see example below), set `CLX_POD_NAME` and `CLX_ACTOR_ID` (or pass `pod_name`/`actor_id` to `clx_query`). Payload will be sent as `{"messages": [{"role":"user","content": prompt}], "metadata": {...}}` when `use_messages_payload=True`. This style is used by Paseo, which is a private project and not publicly available.
 
 Example endpoint: `https://your-worker.workers.dev/pods/{podName}/actors/{actorId}/run`
 
@@ -74,13 +74,12 @@ result = clx_query(
 print(result)  # e.g., "2+2 equals 4."
 ```
 
-## Paseo backend optimization
-clx is optimized to work cleanly with a Paseo backend. Paseo enhances clx by providing a low latency, Cloudflare based actor ecosystem with extended functionality for observing, tracing, and evaluating request/response data:
-- Supports pod/actor routes at `https://<paseo-worker>/pods/{podName}/actors/{actorId}/run`.
-- Uses `use_messages_payload=True` to send `{"messages": [{"role":"user","content": prompt}], "metadata": {...}}` which matches Paseo’s expected shape.
-- Accepts `response` or `output` fields so Paseo responses map directly to return values.
-- Environment-friendly defaults: set `CLX_BACKEND_URL`, `CLX_POD_NAME`, `CLX_ACTOR_ID`, and `CLX_MODEL` (e.g., `@cf/meta/llama-3.1-8b-instruct`) in `.env` and invoke `clx_query` or `demo_backend_call.py`.
-- Paseo repo: https://github.com/RoskiDeluge/paseo
+## Backend contract notes
+clx remains backend-agnostic and only assumes a simple HTTP contract:
+- Supports pod/actor routes at `https://<your-worker>/pods/{podName}/actors/{actorId}/run` when you provide `pod_name`/`actor_id` (or env vars).
+- Uses `use_messages_payload=True` to send `{"messages": [{"role":"user","content": prompt}], "metadata": {...}}` when your backend expects chat-style input.
+- Accepts `response` or `output` fields so backend responses map directly to return values.
+- Environment-friendly defaults: set `CLX_BACKEND_URL`, `CLX_POD_NAME`, `CLX_ACTOR_ID`, and `CLX_MODEL` in `.env` and invoke `clx_query` or `demo_backend_call.py`.
 
 ## Task helpers
 All helpers forward to `clx_query` with light prompt templates:
