@@ -1,6 +1,6 @@
 # clx — Minimal AI Resolver
 
-`clx` is a lightweight Python library that forwards prompts to your own AI backend. It exposes a single primitive, `clx_query`, plus a handful of thin task helpers and SQL adapters for Spark, DuckDB, and SQLite. The library never talks directly to OpenAI/Ollama/etc.—you point it at any backend that implements the simple `/v1/query` contract.
+`clx` is a lightweight Python library that forwards prompts to your own AI backend. It exposes a single primitive, `clx_query`, plus a handful of thin task helpers and SQL adapters for Spark, DuckDB, and SQLite. The library never talks directly to OpenAI/Ollama/etc.—you point it at any backend that implements the simple `/v1/query` contract. Developers are expected to bring their own backend that implements this contract. This library is a reference implementation only; a backend must be configured for it to work after installation.
 
 ## Installation
 ```bash

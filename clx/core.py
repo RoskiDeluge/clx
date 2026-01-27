@@ -3,7 +3,7 @@ Core primitives for the minimal clx resolver.
 
 This module exposes `clx_query`, along with lightweight config and caching
 helpers. All model traffic is forwarded to a user-supplied backend that
-implements the `/v1/query` contract described in PLAN1.md.
+implements the `/v1/query` contract.
 """
 
 from __future__ import annotations
